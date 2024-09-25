@@ -8,6 +8,7 @@
     ./samba.nix
     ./containers
     ./dashy
+    ./blocky
   ];
 
   boot.loader.systemd-boot.enable = true;
