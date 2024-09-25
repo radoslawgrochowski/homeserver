@@ -5,6 +5,7 @@
     ./hardware.nix
     ./users.nix
     ./networking.nix
+    ./samba.nix
   ];
 
   boot.loader.systemd-boot.enable = true;
