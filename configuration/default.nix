@@ -2,56 +2,14 @@
 
 {
   imports = [
-    ./hardware-configuration.nix
+    ./hardware.nix
+    ./users.nix
+    ./networking.nix
   ];
 
   boot.loader.systemd-boot.enable = true;
-  networking.hostName = "stratus";
-  networking.useDHCP = false;
-  networking.interfaces.eth0.useDHCP = false;
-  networking.interfaces.eth0.ipv4.addresses = [{
-    address = "192.168.0.8";
-    prefixLength = 24;
-  }];
-  networking.defaultGateway = "192.168.0.1";
-  networking.nameservers = [ "8.8.8.8" "1.1.1.1" ];
 
   time.timeZone = "Europe/Warsaw";
-
-  users = {
-    mutableUsers = false;
-    users = {
-      root = {
-        hashedPassword = "$y$j9T$Fskkkn21YLU7.K2ZVkq8I1$di8IyJIdLcJGMqAfTY/daHkXB87UxL9lQspyBXwCsF4";
-      };
-      stratus = {
-        isNormalUser = true;
-        extraGroups = [ "wheel" ];
-        hashedPassword = "$y$j9T$hd7vUWgAvLubXpUksgoKH.$BzY.rlf.HfvGlzvq11sCNJB.5BdD.ZBSy/dHPVvQ49A";
-      };
-    };
-  };
-
-  security.sudo.extraRules = [
-    {
-      users = [ "stratus" ];
-      commands = [
-        {
-          command = "ALL";
-          options = [ "NOPASSWD" ];
-        }
-      ];
-    }
-  ];
-
-  services.avahi = {
-    enable = true;
-    nssmdns4 = true;
-    publish = {
-      enable = true;
-      addresses = true;
-    };
-  };
 
   environment.systemPackages = with pkgs; [
     vim
@@ -59,10 +17,7 @@
     git
   ];
 
-  nix.settings.trusted-users = [ "root" "stratus" ];
 
-  services.openssh.enable = true;
-  services.openssh.settings.PermitRootLogin = "yes";
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];

@@ -9,7 +9,7 @@
   outputs = { self, nixpkgs, flake-utils }: {
     nixosConfigurations.stratus = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
-      modules = [ ./configuration.nix ];
+      modules = [ ./configuration ];
     };
   } // flake-utils.lib.eachDefaultSystem
     (system:
