@@ -32,6 +32,18 @@
     };
   };
 
+  security.sudo.extraRules = [
+    {
+      users = [ "stratus" ];
+      commands = [
+        {
+          command = "ALL";
+          options = [ "NOPASSWD" ];
+        }
+      ];
+    }
+  ];
+
   services.avahi = {
     enable = true;
     nssmdns4 = true;
@@ -43,7 +55,10 @@
     git
   ];
 
+  nix.settings.trusted-users = [ "root" "stratus" ];
+
   services.openssh.enable = true;
+  services.openssh.settings.PermitRootLogin = "yes";
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
