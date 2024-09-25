@@ -1,7 +1,7 @@
 { ... }:
 {
   networking = {
-    hostName = "stratus";
+    hostName = "nimbus";
     useDHCP = false;
     interfaces.eth0.useDHCP = false;
     interfaces.eth0.ipv4.addresses = [{

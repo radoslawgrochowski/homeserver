@@ -10,7 +10,7 @@
         hashedPassword = "$y$j9T$Fskkkn21YLU7.K2ZVkq8I1$di8IyJIdLcJGMqAfTY/daHkXB87UxL9lQspyBXwCsF4";
       };
 
-      stratus = {
+      nimbus = {
         isNormalUser = true;
         extraGroups = [ "wheel" "share" ];
         hashedPassword = "$y$j9T$hd7vUWgAvLubXpUksgoKH.$BzY.rlf.HfvGlzvq11sCNJB.5BdD.ZBSy/dHPVvQ49A";
@@ -28,7 +28,7 @@
 
   security.sudo.extraRules = [
     {
-      users = [ "stratus" ];
+      users = [ "nimbus" ];
       commands = [
         {
           command = "ALL";
@@ -38,5 +38,5 @@
     }
   ];
 
-  nix.settings.trusted-users = [ "root" "stratus" ];
+  nix.settings.trusted-users = [ "root" "nimbus" ];
 }

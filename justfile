@@ -7,5 +7,5 @@ update:
   nix flake update
 
 switch *PARAMS: 
-  nixos-rebuild switch --flake .#stratus --target-host stratus@stratus.local --use-remote-sudo {{PARAMS}}
+  nixos-rebuild switch --flake .#nimbus --target-host nimbus@nimbus.local --use-remote-sudo {{PARAMS}}
 
