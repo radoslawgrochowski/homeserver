@@ -6,6 +6,8 @@
     ./users.nix
     ./networking.nix
     ./samba.nix
+    ./containers
+    ./dashy
   ];
 
   boot.loader.systemd-boot.enable = true;
