@@ -11,7 +11,8 @@
     ./blocky
     ./backup
     ./secrets.nix
-    ./grafana.nix
+    ./grafana
+    ./prometheus.nix
   ];
 
   boot.loader.systemd-boot.enable = true;

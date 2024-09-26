@@ -11,6 +11,23 @@
         serve_from_sub_path = true;
       };
     };
+    provision = {
+      enable = true;
+      datasources.settings.datasources = [
+        {
+          name = "prometheus-node"; # name is mandatory but I can leave it out
+          type = "prometheus";
+          url = "http://127.0.0.1:9001"; # TODO make configurable
+        }
+      ];
+      dashboards.settings.providers = [
+        {
+          name = "Node stats";
+          folder = "Common";
+          options.path = ./dashboards/node-exporter.json;
+        }
+      ];
+    };
   };
 
   services.nginx.virtualHosts."nimbus.local" = {
@@ -20,4 +37,5 @@
       recommendedProxySettings = true;
     };
   };
+
 }
