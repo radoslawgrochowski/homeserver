@@ -9,6 +9,8 @@
     ./containers
     ./dashy
     ./blocky
+    ./backup
+    ./secrets.nix
   ];
 
   boot.loader.systemd-boot.enable = true;
