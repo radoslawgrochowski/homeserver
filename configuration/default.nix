@@ -12,7 +12,8 @@
     ./backup
     ./secrets.nix
     ./grafana
-    ./prometheus.nix
+    ./prometheus
+    ./sensors.nix
   ];
 
   boot.loader.systemd-boot.enable = true;

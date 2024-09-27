@@ -14,3 +14,11 @@ sections:
   - title: GitHub
     url: https://github.com/radoslawgrochowski/homeserver
     icon: favicon
+
+sections:
+- name: Monitoring 
+  icon: fas fa-rocket
+  items:
+  - title: Grafana 
+    url: https://nimbus.local/grafana
+    icon: favicon

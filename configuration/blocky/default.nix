@@ -1,18 +1,16 @@
 { ... }:
+let
+  httpPort = 4111;
+in
 # see: https://github.com/notohh/snowflake/blob/24c9c4d46344cefc1ae96671061830226d48f35f/hosts/haru/services/blocky.nix#L104
 {
   services.blocky = {
     enable = true;
     settings = {
       connectIPVersion = "v4";
-      log = {
-        level = "debug";
-        privacy = true;
-      };
-
       ports = {
         dns = 53;
-        http = 4000;
+        http = httpPort;
       };
 
       upstreams.groups.default = [
@@ -84,6 +82,18 @@
 
   };
 
-  networking.firewall.allowedTCPPorts = [ 53 4000 ];
+  networking.firewall.allowedTCPPorts = [ 53 httpPort ];
   networking.firewall.allowedUDPPorts = [ 53 ];
+
+  services.grafana.provision.dashboards.settings.providers = [{
+    name = "Blocky";
+    options.path = ./grafana-dashboard-blocky.json;
+  }];
+
+  services.prometheus = {
+    scrapeConfigs = [{
+      job_name = "blocky";
+      static_configs = [{ targets = [ "localhost:${toString httpPort}" ]; }];
+    }];
+  };
 }
