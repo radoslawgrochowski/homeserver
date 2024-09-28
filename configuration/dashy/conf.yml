@@ -21,3 +21,8 @@ sections:
   - title: Grafana 
     url: http://nimbus.local/grafana
     icon: favicon
+  widgets: 
+  - type: iframe 
+    options: 
+      url: http://nimbus.local/grafana/d-solo/rYdddlPWk/node-stats-detailed?orgId=1&refresh=1m&panelId=19
+      frameHeight: 200

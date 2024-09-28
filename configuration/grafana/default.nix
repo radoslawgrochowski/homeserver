@@ -21,6 +21,9 @@
       "auth.basic" = {
         enabled = false;
       };
+      security = {
+        allow_embedding = true;
+      };
     };
 
     provision.enable = true;
