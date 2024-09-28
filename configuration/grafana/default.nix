@@ -10,6 +10,17 @@
         root_url = "http://nimbus.local/grafana/";
         serve_from_sub_path = true;
       };
+      "auth" = {
+        disable_login_form = true;
+      };
+      "auth.anonymous" = {
+        enabled = true;
+        org_name = "Main Org.";
+        org_role = "Viewer";
+      };
+      "auth.basic" = {
+        enabled = false;
+      };
     };
 
     provision.enable = true;
