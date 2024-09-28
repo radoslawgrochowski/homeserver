@@ -6,14 +6,16 @@
     ./users.nix
     ./networking.nix
     ./samba.nix
-    ./containers
+    ./containers.nix
     ./dashy
     ./blocky
-    ./backup
+    ./restic.nix
     ./secrets.nix
-    ./grafana
+    ./grafana.nix
     ./prometheus
     ./sensors.nix
+    ./loki.nix
+    ./promtail.nix
   ];
 
   boot.loader.systemd-boot.enable = true;

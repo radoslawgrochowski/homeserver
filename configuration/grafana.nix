@@ -16,7 +16,7 @@
       "auth.anonymous" = {
         enabled = true;
         org_name = "Main Org.";
-        org_role = "Viewer";
+        org_role = "Editor";
       };
       "auth.basic" = {
         enabled = false;
