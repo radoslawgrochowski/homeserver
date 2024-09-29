@@ -7,4 +7,5 @@ in
   "restic-password.age".publicKeys = all;
   "restic-env.age".publicKeys = all;
   "restic-repository.age".publicKeys = all;
+  "nextcloud-admin-password.age".publicKeys = all;
 }

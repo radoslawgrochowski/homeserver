@@ -4,15 +4,15 @@
     media = {
       initialize = true;
       paths = [
-        "/share/media/gallery"
-        "/share/media/photos"
+        "/var/lib/nextcloud"
+        "/var/backup/postgresql"
       ];
       repositoryFile = config.age.secrets.restic-repository.path;
       environmentFile = config.age.secrets.restic-env.path;
       passwordFile = config.age.secrets.restic-password.path;
       timerConfig = {
         OnCalendar = "05:00";
-        RandomizedDelaySec = "2h";
+        RandomizedDelaySec = "15min";
         Persistent = true;
       };
       pruneOpts = [

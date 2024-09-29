@@ -10,7 +10,6 @@
     };
   };
 
-  services.nginx.enable = true;
   services.nginx.virtualHosts."nimbus.local" = {
     locations."/" = {
       extraConfig = ''
@@ -22,5 +21,4 @@
     };
   };
 
-  networking.firewall.allowedTCPPorts = [ 80 ];
 }

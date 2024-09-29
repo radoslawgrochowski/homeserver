@@ -16,6 +16,8 @@
     ./sensors.nix
     ./loki.nix
     ./promtail.nix
+    ./nextcloud.nix
+    ./postgresql.nix
   ];
 
   boot.loader.systemd-boot.enable = true;

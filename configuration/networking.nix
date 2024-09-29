@@ -25,4 +25,7 @@
     enable = true;
     settings.PasswordAuthentication = false;
   };
+
+  services.nginx.enable = true;
+  networking.firewall.allowedTCPPorts = [ 80 ];
 }
