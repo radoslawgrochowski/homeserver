@@ -30,6 +30,9 @@ sections:
   - title: Sonarr 
     url: http://nimbus.local/sonarr
     icon: favicon
+  - title: Bazarr 
+    url: http://nimbus.local/bazarr
+    icon: favicon
   - title: Prowlarr 
     url: http://nimbus.local/prowlarr
     icon: favicon

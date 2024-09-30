@@ -13,6 +13,13 @@
     user = "media";
   };
 
+  services.bazarr = {
+    enable = true;
+    openFirewall = true;
+    group = "media";
+    user = "media";
+  };
+
   services.prowlarr = {
     enable = true;
     openFirewall = true;
@@ -53,6 +60,9 @@
     };
     locations."/sabnzbd" = {
       return = "301 http://nimbus.local:8800";
+    };
+    locations."/bazarr" = {
+      return = "301 http://nimbus.local:6767";
     };
   };
 }
