@@ -19,6 +19,7 @@
     ./nextcloud.nix
     ./postgresql.nix
     ./arr.nix
+    ./jellyfin.nix
   ];
 
   boot.loader.systemd-boot.enable = true;

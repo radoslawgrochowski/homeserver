@@ -21,7 +21,7 @@ sections:
     url: http://nimbus.local/grafana
     icon: favicon
 
-- name: Arr stack 
+- name: Media
   icon: fas fa-rocket
   items:
   - title: Radarr 
@@ -35,6 +35,9 @@ sections:
     icon: favicon
   - title: Sabnzbd 
     url: http://nimbus.local/sabnzbd
+    icon: favicon
+  - title: Jellyfin 
+    url: http://nimbus.local/jellyfin
     icon: favicon
 
 - name: Monitoring 
