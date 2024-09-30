@@ -18,6 +18,7 @@
     ./promtail.nix
     ./nextcloud.nix
     ./postgresql.nix
+    ./arr.nix
   ];
 
   boot.loader.systemd-boot.enable = true;

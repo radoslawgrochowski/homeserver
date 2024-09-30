@@ -21,6 +21,22 @@ sections:
     url: http://nimbus.local/grafana
     icon: favicon
 
+- name: Arr stack 
+  icon: fas fa-rocket
+  items:
+  - title: Radarr 
+    url: http://nimbus.local/radarr
+    icon: favicon
+  - title: Sonarr 
+    url: http://nimbus.local/sonarr
+    icon: favicon
+  - title: Prowlarr 
+    url: http://nimbus.local/prowlarr
+    icon: favicon
+  - title: Sabnzbd 
+    url: http://nimbus.local/sabnzbd
+    icon: favicon
+
 - name: Monitoring 
   icon: fas fa-rocket
   widgets: 

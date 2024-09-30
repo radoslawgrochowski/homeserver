@@ -21,6 +21,11 @@
     options = [ "fmask=0077" "dmask=0077" ];
   };
 
+  fileSystems."/media" = {
+    device = "/dev/disk/by-uuid/d03d1cea-6d46-443b-82b3-aac65ddc1841";
+    fsType = "ext4";
+  };
+
   swapDevices = [{ device = "/dev/disk/by-uuid/fc535b1c-689f-4aed-9fcf-c4056c0d04a8"; }];
 
   networking.useDHCP = lib.mkDefault true;

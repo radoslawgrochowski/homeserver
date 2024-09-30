@@ -3,7 +3,7 @@
   users = {
     mutableUsers = false;
     extraGroups = {
-      share = { };
+      media = { };
     };
     users = {
       root = {
@@ -21,7 +21,7 @@
 
       media = {
         isNormalUser = true;
-        group = "share";
+        group = "media";
       };
     };
   };

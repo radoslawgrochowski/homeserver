@@ -1,16 +1,11 @@
 { pkgs, ... }:
 {
-  systemd.tmpfiles.rules = [
-    "d /share 774 root share - -"
-    "d /share/media 774 media share - -"
-  ];
-
   services.samba = {
     enable = true;
     package = pkgs.samba4Full;
     openFirewall = true;
     shares.media = {
-      path = "/share/media";
+      path = "/media";
       writable = true;
       browseable = true;
     };
