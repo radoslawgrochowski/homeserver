@@ -20,6 +20,7 @@
     ./postgresql.nix
     ./arr.nix
     ./jellyfin.nix
+    ./home-assistant.nix
   ];
 
   boot.loader.systemd-boot.enable = true;
