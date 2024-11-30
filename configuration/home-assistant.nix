@@ -2,15 +2,16 @@
   services.home-assistant = {
     enable = true;
     config = { };
-    package = (pkgs.home-assistant.override {
+    extraComponents = [
+      "default_config"
+
       # https://github.com/NixOS/nixpkgs/blob/master/pkgs/servers/home-assistant/component-packages.nix
-      extraComponents = [
-        "default_config"
-        "met"
-        "roborock"
-        "google_translate"
-      ];
-    });
+      "met"
+      "google_assistant"
+      "google_translate"
+      "roborock"
+      "tuya"
+    ];
   };
 
   networking.firewall.allowedTCPPorts = [ 8123 ];
