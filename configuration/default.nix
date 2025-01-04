@@ -5,7 +5,6 @@
     ./hardware.nix
     ./users.nix
     ./networking.nix
-    ./samba.nix
     ./containers.nix
     ./dashy
     ./blocky
