@@ -20,6 +20,7 @@
     ./arr.nix
     ./jellyfin.nix
     ./home-assistant.nix
+    ./tailscale.nix
   ];
 
   boot.loader.systemd-boot.enable = true;

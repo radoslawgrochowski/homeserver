@@ -48,21 +48,21 @@
     "unrar"
   ];
 
-  services.nginx.virtualHosts."nimbus.local" = {
+  services.nginx.virtualHosts."nimbus" = {
     locations."/radarr" = {
-      return = "301 http://nimbus.local:7878";
+      return = "301 $scheme://$http_host:7878";
     };
     locations."/sonarr" = {
-      return = "301 http://nimbus.local:8989";
+      return = "301 $scheme://$http_host:8989";
     };
     locations."/prowlarr" = {
-      return = "301 http://nimbus.local:9696";
+      return = "301 $scheme://$http_host:9696";
     };
     locations."/sabnzbd" = {
-      return = "301 http://nimbus.local:8800";
+      return = "301 $scheme://$http_host:8800";
     };
     locations."/bazarr" = {
-      return = "301 http://nimbus.local:6767";
+      return = "301 $scheme://$http_host:6767";
     };
   };
 

@@ -8,9 +8,9 @@
     hostName = "127.0.0.1";
     settings = {
       overwriteprotocol = "http";
-      overwritehost = "nimbus.local";
+      overwritehost = "nimbus";
       overwritewebroot = "/nextcloud";
-      overwrite.cli.url = "http://nimbus.local/nextcloud/";
+      overwrite.cli.url = "http://nimbus/nextcloud/";
       htaccess.RewriteBase = "/nextcloud";
     };
     config = {
@@ -40,12 +40,9 @@
   #     '';
   #   };
   # };
-  services.nginx.virtualHosts."nimbus.local" = {
+  services.nginx.virtualHosts."nimbus" = {
     locations."/nextcloud/" = {
       priority = 9999;
-      # proxyPass = "http://${host}:${toString port}/";
-      # proxyWebsockets = true;
-      # recommendedProxySettings = true;
       extraConfig = ''
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;

@@ -12,9 +12,9 @@
     pkgs.jellyfin-ffmpeg
   ];
 
-  services.nginx.virtualHosts."nimbus.local" = {
+  services.nginx.virtualHosts."nimbus" = {
     locations."/jellyfin" = {
-      return = "301 http://nimbus.local:8096";
+      return = "301 $scheme://$http_host:8096";
     };
   };
 }

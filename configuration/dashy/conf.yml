@@ -13,43 +13,33 @@ sections:
     items:
       - title: GitHub
         url: https://github.com/radoslawgrochowski/homeserver
-        icon: favicon
       - title: Nextcloud
-        url: http://nimbus.local/nextcloud
-        icon: favicon
+        url: /nextcloud
       - title: Grafana
-        url: http://nimbus.local/grafana
-        icon: favicon
+        url: /grafana
       - title: Home Assistant
-        url: http://nimbus.local/hass
-        icon: favicon
+        url: /hass
 
   - name: Media
     icon: fas fa-rocket
     items:
       - title: Radarr
-        url: http://nimbus.local/radarr
-        icon: favicon
+        url: /radarr
       - title: Sonarr
-        url: http://nimbus.local/sonarr
-        icon: favicon
+        url: /sonarr
       - title: Bazarr
-        url: http://nimbus.local/bazarr
-        icon: favicon
+        url: /bazarr
       - title: Prowlarr
-        url: http://nimbus.local/prowlarr
-        icon: favicon
+        url: /prowlarr
       - title: Sabnzbd
-        url: http://nimbus.local/sabnzbd
-        icon: favicon
+        url: /sabnzbd
       - title: Jellyfin
-        url: http://nimbus.local/jellyfin
-        icon: favicon
+        url: /jellyfin
 
   - name: Monitoring
     icon: fas fa-rocket
     widgets:
       - type: iframe
         options:
-          url: http://nimbus.local/grafana/d-solo/rYdddlPWk/node-stats-detailed?orgId=1&refresh=1m&panelId=19
+          url: /grafana/d-solo/rYdddlPWk/node-stats-detailed?orgId=1&refresh=1m&panelId=19
           frameHeight: 200

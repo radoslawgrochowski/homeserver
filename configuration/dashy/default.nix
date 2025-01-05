@@ -10,7 +10,7 @@
     };
   };
 
-  services.nginx.virtualHosts."nimbus.local" = {
+  services.nginx.virtualHosts."nimbus" = {
     locations."/" = {
       extraConfig = ''
         proxy_pass http://localhost:8085;
