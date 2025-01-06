@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
     agenix = {
       url = "github:ryantm/agenix";
@@ -10,10 +11,12 @@
     };
   };
 
-  outputs = { self, nixpkgs, flake-utils, agenix }: {
+
+  outputs = inputs@{ self, nixpkgs, flake-utils, agenix, nixpkgs-unstable }: {
     nixosConfigurations.nimbus = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
+        ({ overlays, ... }: { nixpkgs.overlays = (nixpkgs.lib.attrValues (import ./overlays.nix { inherit inputs; })); })
         ./configuration
         agenix.nixosModules.default
       ];

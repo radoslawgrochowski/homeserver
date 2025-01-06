@@ -1,6 +1,7 @@
-{ ... }: {
+{ pkgs, ... }: {
   services.home-assistant = {
     enable = true;
+    package = pkgs.unstable.home-assistant;
     config = {
       homeassistant = {
         auth_providers = [{
@@ -22,6 +23,7 @@
       "google_translate"
       "roborock"
       "tuya"
+      "isal"
     ];
   };
 
