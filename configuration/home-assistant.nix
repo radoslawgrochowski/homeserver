@@ -13,6 +13,8 @@
           allow_bypass_login = true;
         }];
       };
+      recorder = { };
+      history = { };
     };
     extraComponents = [
       "default_config"
@@ -24,6 +26,12 @@
       "roborock"
       "tuya"
       "isal"
+      "mqtt"
+
+      # history
+      "history"
+      "history_stats"
+      "recorder"
     ];
   };
 

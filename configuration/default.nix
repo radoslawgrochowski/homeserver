@@ -21,6 +21,7 @@
     ./jellyfin.nix
     ./home-assistant.nix
     ./tailscale.nix
+    ./mqtt.nix
   ];
 
   boot.loader.systemd-boot.enable = true;
