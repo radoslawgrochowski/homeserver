@@ -13,6 +13,8 @@
           allow_bypass_login = true;
         }];
       };
+      "automation manual" = [ ];
+      "automation ui" = "!include automations.yaml";
       recorder = { };
       history = { };
     };
