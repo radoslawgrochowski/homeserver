@@ -32,5 +32,12 @@
     };
   };
 
+
   networking.firewall.allowedTCPPorts = [ config.services.zigbee2mqtt.settings.frontend.port ];
+
+  services.nginx.virtualHosts."nimbus" = {
+    locations."/z2m" = {
+      return = "301 $scheme://$http_host:8083";
+    };
+  };
 }

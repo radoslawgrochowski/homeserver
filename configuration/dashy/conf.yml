@@ -17,8 +17,14 @@ sections:
         url: /nextcloud
       - title: Grafana
         url: /grafana
+
+  - name: Smart Home
+    icon: fas fa-rocket
+    items:
       - title: Home Assistant
         url: /hass
+      - title: Zigbee2Mqtt
+        url: /z2m
 
   - name: Media
     icon: fas fa-rocket
