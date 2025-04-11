@@ -28,6 +28,12 @@
       devices = {
         "0x08ddebfffef1a9f8" = { friendly_name = "bedroom/sensor"; };
         "0x44e2f8fffe21cb74" = { friendly_name = "bedroom/button"; };
+        "0xa4c138af4f0aef38" = { friendly_name = "bedroom/light-switch"; };
+        "0x94ec32fffeff21f7" = { friendly_name = "bedroom/plug"; };
+        "0xd44867fffe150cc2" = { friendly_name = "bedroom/main-light"; };
+        "0x08b95ffffed9f8b5" = { friendly_name = "bedroom/control"; };
+        "0x44e2f8fffe0149d0" = { friendly_name = "bedroom/led-strip"; };
+        "0x0c2a6ffffe22d8e5" = { friendly_name = "living-room/light"; };
       };
     };
   };
