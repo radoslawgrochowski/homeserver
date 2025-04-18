@@ -22,6 +22,7 @@
     ./home-assistant.nix
     ./tailscale.nix
     ./mqtt.nix
+    ./auto-upgrade.nix
   ];
 
   boot.loader.systemd-boot.enable = true;
