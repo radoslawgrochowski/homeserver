@@ -2,7 +2,7 @@
 {
   services.nextcloud = {
     enable = true;
-    package = pkgs.nextcloud29;
+    package = pkgs.nextcloud30;
     database.createLocally = true;
     configureRedis = true;
     hostName = "127.0.0.1";
@@ -22,24 +22,7 @@
   };
 
   services.nginx.virtualHosts."${config.services.nextcloud.hostName}".listen = [{ addr = "127.0.0.1"; port = 8082; }];
-  # services.nginx.virtualHosts."localhost" = {
-  #   locations."^~ /.well-known" = {
-  #     priority = 9000;
-  #     extraConfig = ''
-  #       absolute_redirect off;
-  #       location ~ ^/\\.well-known/(?:carddav|caldav)$ {
-  #         return 301 /nextcloud/remote.php/dav;
-  #       }
-  #       location ~ ^/\\.well-known/host-meta(?:\\.json)?$ {
-  #         return 301 /nextcloud/public.php?service=host-meta-json;
-  #       }
-  #       location ~ ^/\\.well-known/(?!acme-challenge|pki-validation) {
-  #         return 301 /nextcloud/index.php$request_uri;
-  #       }
-  #       try_files $uri $uri/ =404;
-  #     '';
-  #   };
-  # };
+
   services.nginx.virtualHosts."nimbus" = {
     locations."/nextcloud/" = {
       priority = 9999;
