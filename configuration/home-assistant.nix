@@ -15,25 +15,28 @@
       };
       "automation manual" = [ ];
       "automation ui" = "!include automations.yaml";
-      recorder = { };
+      assist_pipeline = { };
+      dhcp = { };
       history = { };
+      homeassistant_alerts = { };
+      logbook = { };
+      mobile_app = { };
+      recorder = { };
+      ssdp = { };
+      zeroconf = { };
     };
+
+    # https://github.com/NixOS/nixpkgs/blob/master/pkgs/servers/home-assistant/component-packages.nix
     extraComponents = [
       "default_config"
 
-      # https://github.com/NixOS/nixpkgs/blob/master/pkgs/servers/home-assistant/component-packages.nix
-      "met"
-      "google_assistant"
       "google_translate"
-      "roborock"
-      "tuya"
-      "isal"
-      "mqtt"
-
-      # history
       "history"
       "history_stats"
+      "isal"
+      "mqtt"
       "recorder"
+      "roborock"
     ];
   };
 
