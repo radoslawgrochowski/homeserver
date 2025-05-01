@@ -16,6 +16,7 @@
       "automation manual" = [ ];
       "automation ui" = "!include automations.yaml";
       assist_pipeline = { };
+      conversation = { };
       dhcp = { };
       history = { };
       homeassistant_alerts = { };
@@ -35,8 +36,10 @@
       "history_stats"
       "isal"
       "mqtt"
+      "ollama"
       "recorder"
       "roborock"
+      "wyoming"
     ];
   };
 
