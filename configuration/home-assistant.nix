@@ -35,10 +35,12 @@
       "history"
       "history_stats"
       "isal"
+      "local_todo"
       "mqtt"
       "ollama"
       "recorder"
       "roborock"
+      "todo"
       "wyoming"
     ];
   };
