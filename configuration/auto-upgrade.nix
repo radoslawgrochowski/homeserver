@@ -1,7 +1,7 @@
 { ... }:
 {
   system.autoUpgrade = {
-    enable = true;
+    enable = false;
     allowReboot = true;
     flake = "github:radoslawgrochowski/homeserver";
     dates = "04:10";
