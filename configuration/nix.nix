@@ -12,5 +12,6 @@
         "radoslawgrochowski-homeserver.cachix.org-1:IUdvjxx3+DE0HQC2sxfrh0WWi9UlZBUGgi0CJz4K3DI="
       ];
     };
+    gc.automatic = true;
   };
 })
