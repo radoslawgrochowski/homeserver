@@ -4,9 +4,11 @@ let
   all = [ radoslawgrochowski-wsl nimbus ];
 in
 {
-  "restic-password.age".publicKeys = all;
-  "restic-env.age".publicKeys = all;
-  "restic-repository.age".publicKeys = all;
   "nextcloud-admin-password.age".publicKeys = all;
+  "radarr-api-key.age".publicKeys = all;
+  "restic-env.age".publicKeys = all;
+  "restic-password.age".publicKeys = all;
+  "restic-repository.age".publicKeys = all;
+  "sonarr-api-key.age".publicKeys = all;
   "tailscale.age".publicKeys = all;
 }
