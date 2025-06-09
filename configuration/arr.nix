@@ -56,6 +56,8 @@
             _secret = "/run/credentials/recyclarr.service/radarr-api_key";
           };
           base_url = "http://localhost:7878";
+          delete_old_custom_formats = true;
+          replace_existing_custom_formats = true;
           include = [
             { template = "radarr-quality-definition-movie"; }
             { template = "radarr-quality-profile-remux-web-1080p"; }
@@ -117,6 +119,9 @@
               ];
             }
           ];
+          quality_definition = {
+            type = "sqp-streaming";
+          };
         };
       };
       sonarr = {
@@ -125,6 +130,8 @@
             _secret = "/run/credentials/recyclarr.service/sonarr-api_key";
           };
           base_url = "http://localhost:8989";
+          delete_old_custom_formats = true;
+          replace_existing_custom_formats = true;
           include = [
             { template = "sonarr-quality-definition-series"; }
             { template = "sonarr-v4-quality-profile-web-1080p"; }
@@ -152,6 +159,11 @@
               ];
             }
           ];
+
+          quality_definition = {
+            type = "series";
+            preferred_ratio = 0.1;
+          };
         };
       };
     };
