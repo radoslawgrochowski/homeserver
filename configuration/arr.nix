@@ -151,6 +151,12 @@
             }
             {
               trash_ids = [
+                "9b64dff695c2115facf1b6ea59c9bd07 " # allows x265 without HDR/DV
+              ];
+              assign_scores_to = [{ name = "WEB-1080p"; score = 0; }];
+            }
+            {
+              trash_ids = [
                 "2016d1676f5ee13a5b7257ff86ac9a93 " # block SDR
               ];
               assign_scores_to = [
