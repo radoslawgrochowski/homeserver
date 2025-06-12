@@ -121,7 +121,7 @@
           ];
           quality_definition = {
             type = "sqp-streaming";
-            preferred_ratio = 0.5;
+            preferred_ratio = 0.05;
           };
         };
       };
@@ -163,7 +163,7 @@
 
           quality_definition = {
             type = "series";
-            preferred_ratio = 0.1;
+            preferred_ratio = 0.05;
           };
         };
       };
