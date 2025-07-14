@@ -6,6 +6,12 @@
     openFirewall = true;
   };
 
+  users.users.jellyfin = {
+    isSystemUser = true;
+    group = "media";
+    extraGroups = [ "render" "video" "output" ];
+  };
+
   environment.systemPackages = [
     pkgs.jellyfin
     pkgs.jellyfin-web
