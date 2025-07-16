@@ -74,6 +74,13 @@ in
 
       };
 
+
+      customDNS = {
+        customTTL = "1h";
+        mapping = {
+          "nimbus.fard.pl" = "192.168.0.8";
+        };
+      };
       prometheus = {
         enable = true;
         path = "/metrics";
