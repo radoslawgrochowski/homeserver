@@ -7,7 +7,7 @@ in
   services.blocky = {
     enable = true;
     settings = {
-      connectIPVersion = "v4";
+      connectIPVersion = "dual";
       ports = {
         dns = 53;
         http = httpPort;
