@@ -152,11 +152,22 @@
             }
             {
               trash_ids = [
-                "2016d1676f5ee13a5b7257ff86ac9a93 " # block SDR
+                "2016d1676f5ee13a5b7257ff86ac9a93" # block SDR
               ];
               assign_scores_to = [
                 { name = "WEB-1080p"; }
                 { name = "WEB-2160p"; }
+              ];
+            }
+            {
+              trash_ids = [
+                "47435ece6b99a0b477caf360e79ba0bb " # x265 (no HDR/DV)
+              ];
+              assign_scores_to = [
+                {
+                  name = "WEB-1080p";
+                  score = 0;
+                }
               ];
             }
           ];
