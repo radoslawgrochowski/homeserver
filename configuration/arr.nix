@@ -142,33 +142,14 @@
           ];
           custom_formats = [
             {
-              trash_ids = [
-                "9b27ab6498ec0f31a3353992e19434ca" # blocks DV without fallback
-              ];
-              assign_scores_to = [
-                { name = "WEB-1080p"; }
-                { name = "WEB-2160p"; }
-              ];
+              # blocks DV without fallback
+              trash_ids = [ "9b27ab6498ec0f31a3353992e19434ca" ];
+              assign_scores_to = [{ name = "WEB-1080p"; } { name = "WEB-2160p"; }];
             }
             {
-              trash_ids = [
-                "2016d1676f5ee13a5b7257ff86ac9a93" # block SDR
-              ];
-              assign_scores_to = [
-                { name = "WEB-1080p"; }
-                { name = "WEB-2160p"; }
-              ];
-            }
-            {
-              trash_ids = [
-                "47435ece6b99a0b477caf360e79ba0bb " # x265 (no HDR/DV)
-              ];
-              assign_scores_to = [
-                {
-                  name = "WEB-1080p";
-                  score = 0;
-                }
-              ];
+              # enable x265
+              trash_ids = [ "47435ece6b99a0b477caf360e79ba0bb" ];
+              assign_scores_to = [{ name = "WEB-1080p"; score = 0; }];
             }
           ];
 
