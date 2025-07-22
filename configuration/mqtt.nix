@@ -34,6 +34,8 @@
         "0x44e2f8fffe0149d0" = { friendly_name = "bedroom/led-strip"; };
         "0x08ddebfffef1a9f8" = { friendly_name = "living-room/sensor"; };
         "0x0c2a6ffffe22d8e5" = { friendly_name = "living-room/light"; };
+        "0x0ceff6fffe675963" = { friendly_name = "loggia/sensor"; };
+        "0x842712fffe380961" = { friendly_name = "office/sensor"; };
       };
     };
   };
