@@ -31,6 +31,7 @@
   time.timeZone = "Europe/Warsaw";
 
   environment.systemPackages = with pkgs; [
+    zfs
     vim
     wget
     git

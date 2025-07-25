@@ -10,6 +10,10 @@
   boot.kernelModules = [ "kvm-amd" "amdgpu" ];
   boot.extraModulePackages = [ ];
 
+  boot.supportedFilesystems = [ "zfs" ];
+  boot.zfs.forceImportRoot = false;
+  networking.hostId = "d5480186";
+
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/1753e1f5-f246-4369-88f8-ab9ef9273c57";
     fsType = "ext4";
