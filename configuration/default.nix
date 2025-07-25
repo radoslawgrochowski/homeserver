@@ -24,6 +24,7 @@
     ./mqtt.nix
     ./auto-upgrade.nix
     ./nix.nix
+    ./zfs.nix
   ];
 
   boot.loader.systemd-boot.enable = true;
@@ -31,7 +32,6 @@
   time.timeZone = "Europe/Warsaw";
 
   environment.systemPackages = with pkgs; [
-    zfs
     vim
     wget
     git
