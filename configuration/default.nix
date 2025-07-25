@@ -23,6 +23,7 @@
     ./tailscale.nix
     ./mqtt.nix
     ./auto-upgrade.nix
+    ./nix.nix
   ];
 
   boot.loader.systemd-boot.enable = true;

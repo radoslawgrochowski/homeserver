@@ -20,6 +20,7 @@
         ./configuration
         agenix.nixosModules.default
       ];
+      specialArgs = { inherit inputs; };
     };
   } // flake-utils.lib.eachDefaultSystem
     (system:
