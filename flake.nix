@@ -18,18 +18,17 @@
         ({ overlays, ... }: { nixpkgs.overlays = (nixpkgs.lib.attrValues (import ./overlays.nix { inherit inputs; })); })
         agenix.nixosModules.default
       ];
-      specialArgs = {
-        inherit inputs;
-      };
     in
     {
       nixosConfigurations.nimbus = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        modules = commonModules + [
+        modules = commonModules ++ [
           ./hosts/nimbus
           ./configuration
         ];
-        specialArgs = specialArgs;
+        specialArgs = {
+          inherit inputs;
+        };
       };
     } // flake-utils.lib.eachDefaultSystem
       (system:

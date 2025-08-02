@@ -5,6 +5,7 @@
     package = pkgs.nextcloud31;
     database.createLocally = true;
     configureRedis = true;
+    datadir = "/tank/nextcloud-data";
     hostName = "127.0.0.1";
     settings = {
       overwriteprotocol = "http";
