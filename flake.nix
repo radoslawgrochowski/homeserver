@@ -12,29 +12,38 @@
   };
 
 
-  outputs = inputs@{ self, nixpkgs, flake-utils, agenix, nixpkgs-unstable }: {
-    nixosConfigurations.nimbus = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      modules = [
+  outputs = inputs@{ self, nixpkgs, flake-utils, agenix, nixpkgs-unstable }:
+    let
+      commonModules = [
         ({ overlays, ... }: { nixpkgs.overlays = (nixpkgs.lib.attrValues (import ./overlays.nix { inherit inputs; })); })
-        ./configuration
         agenix.nixosModules.default
       ];
-      specialArgs = { inherit inputs; };
-    };
-  } // flake-utils.lib.eachDefaultSystem
-    (system:
-      let
-        pkgs = import nixpkgs { inherit system; };
-      in
-      {
-        devShells.default = pkgs.mkShell {
-          packages = with pkgs; [
-            just
-            agenix.packages."${system}".default
-          ];
-        };
-      });
+      specialArgs = {
+        inherit inputs;
+      };
+    in
+    {
+      nixosConfigurations.nimbus = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = commonModules + [
+          ./hosts/nimbus
+          ./configuration
+        ];
+        specialArgs = specialArgs;
+      };
+    } // flake-utils.lib.eachDefaultSystem
+      (system:
+        let
+          pkgs = import nixpkgs { inherit system; };
+        in
+        {
+          devShells.default = pkgs.mkShell {
+            packages = with pkgs; [
+              just
+              agenix.packages."${system}".default
+            ];
+          };
+        });
 
   nixConfig = {
     experimental-features = [ "nix-command" "flakes" ];
