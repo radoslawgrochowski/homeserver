@@ -1,7 +1,6 @@
-{ pkgs, ... }:
-
-{
+{ pkgs, ... }: {
   imports = [
+    ./hardware.nix
     ./users.nix
     ./networking.nix
     ./containers.nix
@@ -26,11 +25,14 @@
     ./zfs.nix
   ];
 
+
   time.timeZone = "Europe/Warsaw";
   environment.systemPackages = with pkgs; [
     vim
     wget
     git
   ];
-}
 
+  boot.loader.systemd-boot.enable = true;
+  system.stateVersion = "24.05";
+}

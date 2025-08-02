@@ -22,10 +22,7 @@
     {
       nixosConfigurations.nimbus = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        modules = commonModules ++ [
-          ./hosts/nimbus
-          ./configuration
-        ];
+        modules = commonModules ++ [ ./nimbus ];
         specialArgs = {
           inherit inputs;
         };
