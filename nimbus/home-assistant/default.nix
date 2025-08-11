@@ -24,6 +24,14 @@
       recorder = { };
       ssdp = { };
       zeroconf = { };
+      climate = [
+        {
+          name = "living-room/ac";
+          platform = "gree";
+          host = "192.168.0.112";
+          mac = "C0:39:37:A1:AE:5C";
+        }
+      ];
     };
 
     # https://github.com/NixOS/nixpkgs/blob/master/pkgs/servers/home-assistant/component-packages.nix
@@ -38,7 +46,12 @@
       "recorder"
       "roborock"
     ];
+
+    customComponents = [
+      (pkgs.callPackage ./gree.nix { })
+    ];
   };
+
 
   networking.firewall.allowedTCPPorts = [ 8123 ];
   services.nginx.virtualHosts."nimbus" = {

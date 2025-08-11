@@ -17,7 +17,7 @@
     ./postgresql.nix
     ./arr.nix
     ./jellyfin.nix
-    ./home-assistant.nix
+    ./home-assistant
     ./tailscale.nix
     ./mqtt.nix
     ./auto-upgrade.nix
