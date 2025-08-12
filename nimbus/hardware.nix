@@ -11,6 +11,7 @@
   boot.extraModulePackages = [ ];
 
   boot.supportedFilesystems = [ "zfs" ];
+  boot.zfs.extraPools = [ "tank" ];
   boot.zfs.forceImportRoot = false;
   networking.hostId = "d5480186";
 
