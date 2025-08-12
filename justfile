@@ -6,9 +6,8 @@ _default:
 update: 
   nix flake update
 
-switch *PARAMS: 
-  nixos-rebuild switch --flake .#nimbus --target-host nimbus@nimbus.local --use-remote-sudo {{PARAMS}}
+switch HOST *PARAMS:
+  nixos-rebuild switch --flake .#{{HOST}} --target-host {{HOST}}@{{HOST}} --use-remote-sudo {{PARAMS}}
 
-boot *PARAMS: 
-  nixos-rebuild boot --flake .#nimbus --target-host nimbus@nimbus.local --use-remote-sudo {{PARAMS}}
-
+boot HOST *PARAMS:
+  nixos-rebuild boot --flake .#{{HOST}} --target-host {{HOST}}@{{HOST}} --use-remote-sudo {{PARAMS}}

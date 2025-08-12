@@ -17,12 +17,20 @@
       commonModules = [
         ({ overlays, ... }: { nixpkgs.overlays = (nixpkgs.lib.attrValues (import ./overlays.nix { inherit inputs; })); })
         agenix.nixosModules.default
+        ./common
       ];
     in
     {
       nixosConfigurations.nimbus = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = commonModules ++ [ ./nimbus ];
+        specialArgs = {
+          inherit inputs;
+        };
+      };
+      nixosConfigurations.fawkes = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = commonModules ++ [ ./fawkes ];
         specialArgs = {
           inherit inputs;
         };
