@@ -38,3 +38,4 @@ jobs:
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
           name: radoslawgrochowski-homeserver
       - run: nix build .#nixosConfigurations.nimbus.config.system.build.toplevel -L --show-trace --accept-flake-config
+      - run: nix build .#nixosConfigurations.fawkes.config.system.build.toplevel -L --show-trace --accept-flake-config
