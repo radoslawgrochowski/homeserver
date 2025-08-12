@@ -10,6 +10,10 @@
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
 
+  boot.supportedFilesystems = [ "zfs" ];
+  boot.zfs.forceImportRoot = false;
+  networking.hostId = "36ae9790";
+
   fileSystems."/" =
     {
       device = "/dev/disk/by-uuid/cee8af6f-969f-4ba5-8c6a-5254491935dd";

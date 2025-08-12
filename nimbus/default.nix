@@ -21,7 +21,6 @@
     ./mqtt.nix
     ./auto-upgrade.nix
     ./nix.nix
-    ./zfs.nix
   ];
 
 
