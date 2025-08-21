@@ -5,6 +5,7 @@
 
     datasets."tank" = {
       recursive = true;
+      hourly = 3;
       daily = 3;
       weekly = 3;
       monthly = 3;
