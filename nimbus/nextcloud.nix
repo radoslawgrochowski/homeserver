@@ -9,9 +9,9 @@
     hostName = "127.0.0.1";
     settings = {
       overwriteprotocol = "http";
-      overwritehost = "nimbus";
+      overwritehost = "nimbus.local";
       overwritewebroot = "/nextcloud";
-      overwrite.cli.url = "http://nimbus/nextcloud/";
+      overwrite.cli.url = "http://nimbus.local/nextcloud/";
       htaccess.RewriteBase = "/nextcloud";
     };
     config = {
