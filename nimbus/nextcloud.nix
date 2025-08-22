@@ -20,6 +20,10 @@
         "nimbus.tail36fc5c.ts.net"
       ];
     };
+    phpExtraExtensions = all: [
+      all.pdlib
+      all.bz2
+    ];
     config = {
       dbtype = "pgsql";
       adminuser = "admin";
