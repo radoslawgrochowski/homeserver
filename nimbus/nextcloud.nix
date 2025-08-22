@@ -13,6 +13,12 @@
       overwritewebroot = "/nextcloud";
       overwrite.cli.url = "http://nimbus.local/nextcloud/";
       htaccess.RewriteBase = "/nextcloud";
+      trusted_domains = [
+        "nimbus"
+        "nimbus.fard.pl"
+        "192.168.0.8"
+        "nimbus.tail36fc5c.ts.net"
+      ];
     };
     config = {
       dbtype = "pgsql";
