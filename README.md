@@ -1,6 +1,6 @@
 # homeserver
 
-NixOS configuration for my homeserver using flakes.
+NixOS configuration for my home servers using flakes.
 
 ## Architecture
 
