@@ -18,9 +18,10 @@
     git
   ];
 
-  services.openssh.enable = true;
-  services.openssh.settings.PasswordAuthentication = true;
-  services.openssh.settings.PermitRootLogin = "yes";
+  services.openssh = {
+    enable = true;
+    settings.PasswordAuthentication = false;
+  };
 
   system.stateVersion = "25.05";
 }
