@@ -5,11 +5,11 @@
 
     datasets."backup/nimbus-tank" = {
       recursive = true;
-      hourly = 3;
-      daily = 3;
-      weekly = 3;
-      monthly = 3;
-      yearly = 3;
+      hourly = 48;
+      daily = 14;
+      weekly = 8;
+      monthly = 24;
+      yearly = 5;
       autoprune = true;
       autosnap = false;
     };
