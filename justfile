@@ -1,10 +1,13 @@
 _default:
   just --list
 
+check: 
+  nix flake check 
+
 update: 
   nix flake update
 
-check HOST:
+dry-activate HOST:
   nixos-rebuild dry-activate --flake . --target-host {{HOST}}
 
 switch HOST *PARAMS:
