@@ -79,8 +79,6 @@ in
         customTTL = "1h";
         mapping = {
           "nimbus.fard.pl" = "192.168.0.8";
-          "nimbus.local" = "192.168.0.8";
-          "nimbus" = "192.168.0.8";
         };
       };
 
