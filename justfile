@@ -10,6 +10,7 @@ update:
 dry-activate HOST:
   nixos-rebuild dry-activate --flake . --target-host {{HOST}}
 
+# example: `$ just switch nimbus@nimbus.fard.pl`
 switch HOST *PARAMS:
   nixos-rebuild switch --flake . --target-host {{HOST}} --use-remote-sudo {{PARAMS}}
 

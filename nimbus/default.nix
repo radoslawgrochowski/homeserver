@@ -22,6 +22,7 @@
     ./auto-upgrade.nix
     ./nix.nix
     ./sanoid.nix
+    ./security.nix
   ];
 
   time.timeZone = "Europe/Warsaw";
