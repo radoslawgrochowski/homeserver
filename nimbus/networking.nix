@@ -38,13 +38,13 @@
 
   services.nginx = {
     enable = true;
-
-    # Default server block - reject direct IP access
-    virtualHosts."_" = {
-      default = true;
-      extraConfig = ''
-        return 444;  # Close connection without response
-      '';
+    virtualHosts = {
+      "_" = {
+        default = true;
+        extraConfig = ''
+          return 444;  # Close connection without response
+        '';
+      };
     };
   };
 
