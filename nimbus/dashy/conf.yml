@@ -14,7 +14,7 @@ sections:
       - title: GitHub
         url: https://github.com/radoslawgrochowski/homeserver
       - title: Nextcloud
-        url: /nextcloud
+        url: http://nextcloud.nimbus.fard.pl
       - title: Grafana
         url: /grafana
 

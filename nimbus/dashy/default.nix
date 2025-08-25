@@ -1,4 +1,16 @@
 { ... }:
+let
+  nginxSettings = {
+    locations."/" = {
+      extraConfig = ''
+        proxy_pass http://localhost:8085;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      '';
+    };
+  };
+in
 {
   virtualisation.oci-containers.containers = {
     dashy = {
@@ -10,15 +22,7 @@
     };
   };
 
-  services.nginx.virtualHosts."nimbus" = {
-    locations."/" = {
-      extraConfig = ''
-        proxy_pass http://localhost:8085;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-      '';
-    };
-  };
-
+  services.nginx.virtualHosts."nimbus" = nginxSettings;
+  services.nginx.virtualHosts."nimbus.fard.pl" = nginxSettings;
+  services.nginx.virtualHosts."nimbus.local" = nginxSettings;
 }

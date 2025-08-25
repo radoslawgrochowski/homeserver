@@ -6,23 +6,18 @@
     database.createLocally = true;
     configureRedis = true;
     datadir = "/tank/nextcloud-data";
-    hostName = "127.0.0.1";
+    hostName = "nextcloud.nimbus.fard.pl";
     extraApps = {
       inherit (config.services.nextcloud.package.packages.apps) memories recognize;
     };
     extraAppsEnable = true;
     settings = {
       overwriteprotocol = "http";
-      overwritehost = "nimbus.fard.pl";
-      overwritewebroot = "/nextcloud";
-      overwrite.cli.url = "http://nimbus.fard.pl/nextcloud/";
-      htaccess.RewriteBase = "/nextcloud";
-      trusted_domains = [ "nimbus.local" ];
+      overwritehost = config.services.nextcloud.hostName;
+      overwritewebroot = "/";
+      overwrite.cli.url = "${config.services.nextcloud.settings.overwriteprotocol}://${config.services.nextcloud.hostName}/";
+      htaccess.RewriteBase = "/";
     };
-    phpExtraExtensions = all: [
-      all.pdlib
-      all.bz2
-    ];
     config = {
       dbtype = "pgsql";
       adminuser = "admin";
@@ -31,24 +26,7 @@
     maxUploadSize = "16G";
   };
 
-  services.nginx.virtualHosts."${config.services.nextcloud.hostName}".listen = [{ addr = "127.0.0.1"; port = 8082; }];
-
-  services.nginx.virtualHosts."nimbus" = {
-    locations."/nextcloud/" = {
-      priority = 9999;
-      extraConfig = ''
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-NginX-Proxy true;
-        proxy_set_header X-Forwarded-Proto http;
-        proxy_set_header Host $host;
-        proxy_pass http://127.0.0.1:8082/; # tailing / is important!
-        proxy_cache_bypass $http_upgrade;
-        proxy_redirect off;
-        client_max_body_size 1G;
-      '';
-    };
-  };
+  services.blocky.settings.customDNS.mapping."${config.services.nextcloud.hostName}" =
+    (builtins.elemAt config.networking.interfaces.eth0.ipv4.addresses 0).address;
 }
-
 
