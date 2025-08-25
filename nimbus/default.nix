@@ -23,6 +23,8 @@
     ./nix.nix
     ./sanoid.nix
     ./security.nix
+    ./ddns.nix
+    ./acme.nix
   ];
 
   time.timeZone = "Europe/Warsaw";

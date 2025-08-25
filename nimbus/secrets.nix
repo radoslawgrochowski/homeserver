@@ -9,4 +9,10 @@
   age.secrets.restic-repository.file = ../secrets/restic-repository.age;
   age.secrets.sonarr-api-key.file = ../secrets/sonarr-api-key.age;
   age.secrets.tailscale.file = ../secrets/tailscale.age;
+  age.secrets.ddns-config = {
+    file = ../secrets/ddns-config.age;
+    owner = "ddns";
+    group = "ddns";
+    mode = "0400";
+  };
 }

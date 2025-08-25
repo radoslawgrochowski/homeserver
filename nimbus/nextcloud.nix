@@ -7,16 +7,17 @@
     configureRedis = true;
     datadir = "/tank/nextcloud-data";
     hostName = "nextcloud.nimbus.fard.pl";
+    https = true;
     extraApps = {
       inherit (config.services.nextcloud.package.packages.apps) memories recognize;
     };
     extraAppsEnable = true;
     settings = {
-      overwriteprotocol = "http";
-      overwritehost = config.services.nextcloud.hostName;
-      overwritewebroot = "/";
-      overwrite.cli.url = "${config.services.nextcloud.settings.overwriteprotocol}://${config.services.nextcloud.hostName}/";
-      htaccess.RewriteBase = "/";
+      # overwriteprotocol = "https";
+      # overwritehost = config.services.nextcloud.hostName;
+      # overwritewebroot = "/";
+      # overwrite.cli.url = "${config.services.nextcloud.settings.overwriteprotocol}://${config.services.nextcloud.hostName}/";
+      # htaccess.RewriteBase = "/";
 
       log_type = "file";
       logfile = "/var/log/nextcloud/nextcloud.log";
@@ -36,7 +37,6 @@
   systemd.tmpfiles.rules = [
     "d /var/log/nextcloud 0750 nextcloud nextcloud -"
   ];
-
   environment.etc."fail2ban/filter.d/nextcloud.conf".text = ''
     [Definition]
     _groupsre = (?:(?:,?\s*"\w+":(?:"[^"]+"|\w+))*)
@@ -44,6 +44,18 @@
                 ^\{%(_groupsre)s,?\s*"remoteAddr":"<HOST>"%(_groupsre)s,?\s*"message":"Trusted domain error.
     datepattern = ,?\s*"time"\s*:\s*"%%Y-%%m-%%d[T ]%%H:%%M:%%S(%%z)?"
   '';
+
+  services.nginx.virtualHosts.${config.services.nextcloud.hostName} = {
+    forceSSL = true;
+    enableACME = true;
+  };
+
+  security.acme = {
+    acceptTerms = true;
+    certs."${config.services.nextcloud.hostName}" = {
+      email = "rg@fard.pl";
+    };
+  };
 
   services.fail2ban.jails.nextcloud = {
     settings = {

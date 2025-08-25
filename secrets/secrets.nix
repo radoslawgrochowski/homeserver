@@ -13,4 +13,5 @@ in
   "restic-repository.age".publicKeys = home;
   "sonarr-api-key.age".publicKeys = home;
   "tailscale.age".publicKeys = all;
+  "ddns-config.age".publicKeys = home;
 }

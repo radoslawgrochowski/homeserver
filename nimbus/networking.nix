@@ -38,7 +38,7 @@
 
   services.nginx = {
     enable = true;
-    
+
     # Default server block - reject direct IP access
     virtualHosts."_" = {
       default = true;
@@ -47,6 +47,6 @@
       '';
     };
   };
-  
-  networking.firewall.allowedTCPPorts = [ 80 ];
+
+  networking.firewall.allowedTCPPorts = [ 80 443 ];
 }
