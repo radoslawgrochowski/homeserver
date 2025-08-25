@@ -6,8 +6,8 @@
       server = {
         http_addr = "127.0.0.1";
         http_port = 8101;
-        domain = "nimbus";
-        root_url = "http://nimbus/grafana/";
+        domain = "nimbus.fard.pl";
+        root_url = "http://nimbus.fard.pl/grafana/";
         serve_from_sub_path = true;
       };
       "auth" = {
@@ -29,7 +29,7 @@
     provision.enable = true;
   };
 
-  services.nginx.virtualHosts."nimbus" = {
+  services.nginx.virtualHosts."nimbus.fard.pl" = {
     locations."/grafana/" = {
       proxyPass = "http://${toString config.services.grafana.settings.server.http_addr}:${toString config.services.grafana.settings.server.http_port}";
       proxyWebsockets = true;

@@ -54,7 +54,7 @@
 
 
   networking.firewall.allowedTCPPorts = [ 8123 ];
-  services.nginx.virtualHosts."nimbus" = {
+  services.nginx.virtualHosts."nimbus.fard.pl" = {
     locations."/hass" = {
       return = "301 $scheme://$http_host:8123";
     };

@@ -35,7 +35,7 @@
     pkgs.jellyfin-ffmpeg
   ];
 
-  services.nginx.virtualHosts."nimbus" = {
+  services.nginx.virtualHosts."nimbus.fard.pl" = {
     locations."/jellyfin" = {
       return = "301 $scheme://$http_host:8096";
     };

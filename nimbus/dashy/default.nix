@@ -22,7 +22,5 @@ in
     };
   };
 
-  services.nginx.virtualHosts."nimbus" = nginxSettings;
   services.nginx.virtualHosts."nimbus.fard.pl" = nginxSettings;
-  services.nginx.virtualHosts."nimbus.local" = nginxSettings;
 }

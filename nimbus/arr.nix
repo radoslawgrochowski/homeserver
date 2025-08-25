@@ -173,7 +173,7 @@
     "unrar"
   ];
 
-  services.nginx.virtualHosts."nimbus" = {
+  services.nginx.virtualHosts."nimbus.fard.pl" = {
     locations."/radarr" = {
       return = "301 $scheme://$http_host:7878";
     };

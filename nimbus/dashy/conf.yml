@@ -16,36 +16,36 @@ sections:
       - title: Nextcloud
         url: http://nextcloud.nimbus.fard.pl
       - title: Grafana
-        url: /grafana
+        url: http://nimbus.fard.pl/grafana
 
   - name: Smart Home
     icon: fas fa-rocket
     items:
       - title: Home Assistant
-        url: /hass
+        url: http://nimbus.fard.pl/hass
       - title: Zigbee2Mqtt
-        url: /z2m
+        url: http://nimbus.fard.pl/z2m
 
   - name: Media
     icon: fas fa-rocket
     items:
       - title: Radarr
-        url: /radarr
+        url: http://nimbus.fard.pl/radarr
       - title: Sonarr
-        url: /sonarr
+        url: http://nimbus.fard.pl/sonarr
       - title: Bazarr
-        url: /bazarr
+        url: http://nimbus.fard.pl/bazarr
       - title: Prowlarr
-        url: /prowlarr
+        url: http://nimbus.fard.pl/prowlarr
       - title: Sabnzbd
-        url: /sabnzbd
+        url: http://nimbus.fard.pl/sabnzbd
       - title: Jellyfin
-        url: /jellyfin
+        url: http://nimbus.fard.pl/jellyfin
 
   - name: Monitoring
     icon: fas fa-rocket
     widgets:
       - type: iframe
         options:
-          url: /grafana/d-solo/rYdddlPWk/node-stats-detailed?orgId=1&refresh=1m&panelId=19
+          url: http://nimbus.fard.pl/grafana/d-solo/rYdddlPWk/node-stats-detailed?orgId=1&refresh=1m&panelId=19
           frameHeight: 200

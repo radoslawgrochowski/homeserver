@@ -43,7 +43,7 @@
 
   networking.firewall.allowedTCPPorts = [ config.services.zigbee2mqtt.settings.frontend.port ];
 
-  services.nginx.virtualHosts."nimbus" = {
+  services.nginx.virtualHosts."nimbus.fard.pl" = {
     locations."/z2m" = {
       return = "301 $scheme://$http_host:8083";
     };
