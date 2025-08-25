@@ -9,14 +9,13 @@
     hostName = "127.0.0.1";
     settings = {
       overwriteprotocol = "http";
-      overwritehost = "nimbus.local";
+      overwritehost = "nimbus.fard.pl";
       overwritewebroot = "/nextcloud";
-      overwrite.cli.url = "http://nimbus.local/nextcloud/";
+      overwrite.cli.url = "http://nimbus.fard.pl/nextcloud/";
       htaccess.RewriteBase = "/nextcloud";
       trusted_domains = [
-        "nimbus"
-        "nimbus.fard.pl"
         "192.168.0.8"
+        "nimbus.local"
         "nimbus.tail36fc5c.ts.net"
       ];
     };
