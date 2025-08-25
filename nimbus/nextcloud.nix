@@ -13,11 +13,10 @@
     };
     extraAppsEnable = true;
     settings = {
-      # overwriteprotocol = "https";
-      # overwritehost = config.services.nextcloud.hostName;
-      # overwritewebroot = "/";
-      # overwrite.cli.url = "${config.services.nextcloud.settings.overwriteprotocol}://${config.services.nextcloud.hostName}/";
-      # htaccess.RewriteBase = "/";
+      allowed_admin_ranges = [
+        "192.168.0.0/16"
+        "fd00::/8"
+      ];
 
       log_type = "file";
       logfile = "/var/log/nextcloud/nextcloud.log";
@@ -46,8 +45,15 @@
   '';
 
   services.nginx.virtualHosts.${config.services.nextcloud.hostName} = {
+    serverName = config.services.nextcloud.hostName;
     forceSSL = true;
     enableACME = true;
+    serverAliases = [ ];
+    extraConfig = ''
+      if ($host != "${config.services.nextcloud.hostName}") {
+        return 444;
+      }
+    '';
   };
 
   security.acme = {
