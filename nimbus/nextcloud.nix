@@ -7,17 +7,17 @@
     configureRedis = true;
     datadir = "/tank/nextcloud-data";
     hostName = "127.0.0.1";
+    extraApps = {
+      inherit (config.services.nextcloud.package.packages.apps) memories recognize;
+    };
+    extraAppsEnable = true;
     settings = {
       overwriteprotocol = "http";
       overwritehost = "nimbus.fard.pl";
       overwritewebroot = "/nextcloud";
       overwrite.cli.url = "http://nimbus.fard.pl/nextcloud/";
       htaccess.RewriteBase = "/nextcloud";
-      trusted_domains = [
-        "192.168.0.8"
-        "nimbus.local"
-        "nimbus.tail36fc5c.ts.net"
-      ];
+      trusted_domains = [ "nimbus.local" ];
     };
     phpExtraExtensions = all: [
       all.pdlib
@@ -50,4 +50,5 @@
     };
   };
 }
+
 
