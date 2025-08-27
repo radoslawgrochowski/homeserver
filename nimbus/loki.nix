@@ -20,6 +20,8 @@
     };
   };
 
+  networking.firewall.allowedTCPPorts = [ 3100 ];
+
   services.grafana.provision = {
     datasources.settings.datasources = [{
       name = "nimbus-loki";

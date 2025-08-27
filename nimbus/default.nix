@@ -12,7 +12,6 @@
     ./prometheus
     ./sensors.nix
     ./loki.nix
-    ./promtail.nix
     ./nextcloud.nix
     ./postgresql.nix
     ./arr.nix
