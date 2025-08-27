@@ -10,7 +10,6 @@ Keep README.md as the primary source for project conventions and information.
 **Important**: You are currently working from WSL/development environment, NOT on the actual host machines (nimbus/fawkes). This means:
 
 - You cannot directly run `nixos-rebuild` or system commands on the hosts
-- Use `just switch <HOST>` commands for remote rebuilds (requires SSH access)
 - Network connectivity to hosts may be limited or require specific routing
 - Always consider that you're working outside the homeserver network context
 - Test connectivity to hosts before attempting remote operations

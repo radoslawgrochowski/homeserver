@@ -1,26 +1,19 @@
-{ ... }:
+{ config, ... }:
 let
   port = 9001;
-  nodePort = 9002;
 in
 {
-
   services.prometheus = {
     enable = true;
     port = port;
     scrapeConfigs = [{
       job_name = "node-exporter";
-      static_configs = [{ targets = [ "localhost:${toString nodePort}" ]; }];
+      static_configs = [
+        { targets = [ "localhost:${toString config.services.prometheus.exporters.node.port}" ]; }
+        { targets = [ "fawkes:9100" ]; }
+      ];
     }];
-    exporters = {
-      node = {
-        enable = true;
-        enabledCollectors = [ "systemd" ];
-        port = nodePort;
-      };
-    };
   };
-
 
   services.grafana.provision = {
     datasources.settings.datasources = [{
