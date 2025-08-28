@@ -18,3 +18,7 @@ Keep README.md as the primary source for project conventions and information.
 
 - **Imports**: Group common imports at module top, use relative paths
 - **Structure**: Modular configuration - one service per file when possible
+
+## Post-Edit Validation
+
+**Always run `nix flake check` after editing .nix files** to validate configuration syntax and catch errors before deployment.

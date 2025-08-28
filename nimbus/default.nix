@@ -8,7 +8,7 @@
     ./blocky
     ./restic.nix
     ./secrets.nix
-    ./grafana.nix
+    ./grafana
     ./prometheus
     ./sensors.nix
     ./loki.nix

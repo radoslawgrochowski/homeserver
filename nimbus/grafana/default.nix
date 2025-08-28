@@ -26,7 +26,14 @@
       };
     };
 
-    provision.enable = true;
+    provision = {
+      enable = true;
+      alerting = {
+        contactPoints.path = ./grafana-contact-points.yml;
+        policies.path = ./grafana-notification-policies.yml;
+        rules.path = ./alerts;
+      };
+    };
   };
 
   services.nginx.virtualHosts."nimbus.fard.pl" = {
@@ -36,5 +43,4 @@
       recommendedProxySettings = true;
     };
   };
-
 }

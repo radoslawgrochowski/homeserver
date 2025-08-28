@@ -13,7 +13,7 @@
           allow_bypass_login = true;
         }];
       };
-      "automation manual" = import ./temperature-alerts.nix;
+      "automation manual" = (import ./temperature-alerts.nix) ++ (import ./grafana-alerts.nix);
       "automation ui" = "!include automations.yaml";
       assist_pipeline = { };
       dhcp = { };

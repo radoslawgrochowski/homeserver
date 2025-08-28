@@ -1,0 +1,13 @@
+apiVersion: 1
+
+contactPoints:
+  - orgId: 1
+    name: homeassistant
+    receivers:
+      - uid: homeassistant_webhook
+        type: webhook
+        settings:
+          url: http://localhost:8123/api/webhook/grafana_alerts
+          httpMethod: POST
+          title: "{{ .GroupLabels.alertname }}"
+          message: "{{ range .Alerts }}{{ .Annotations.description }}{{ end }}"

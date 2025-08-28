@@ -27,8 +27,10 @@ in
   services.grafana.provision = {
     datasources.settings.datasources = [{
       name = "prometheus-nimbus";
+      uid = "prometheus-nimbus";
       type = "prometheus";
-      url = "http://nimbus:${toString port}";
+      url = "http://127.0.0.1:${toString port}";
+      isDefault = true;
     }];
     dashboards.settings.providers = [{
       name = "Node";
