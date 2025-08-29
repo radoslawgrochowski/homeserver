@@ -8,7 +8,7 @@ groups:
     rules:
       - uid: syncoid_failure_alert
         title: Syncoid Backup Failed
-        condition: A
+        condition: B
         data:
           - refId: A
             relativeTimeRange:
@@ -19,9 +19,36 @@ groups:
               datasource:
                 type: prometheus
                 uid: prometheus-nimbus
-              expr: node_systemd_unit_state{name="syncoid-tank.timer", state="failed"} == 1 or node_systemd_unit_state{name="syncoid-tank.service", state="failed"} == 1
+              expr: node_systemd_unit_state{name="syncoid-tank.timer", state="failed"} or node_systemd_unit_state{name="syncoid-tank.service", state="failed"}
               instant: true
+              intervalMs: 1000
+              maxDataPoints: 43200
               refId: A
+          - refId: B
+            datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 1
+                    type: gte
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - B
+                  reducer:
+                    params: []
+                    type: last
+                  type: query
+              datasource:
+                type: __expr__
+                uid: __expr__
+              expression: A
+              intervalMs: 1000
+              maxDataPoints: 43200
+              refId: B
+              type: threshold
         for: 5m
         labels:
           receiver: homeassistant
@@ -30,7 +57,7 @@ groups:
 
       - uid: syncoid_overdue_alert
         title: Syncoid Backup Overdue
-        condition: A
+        condition: B
         data:
           - refId: A
             relativeTimeRange:
@@ -41,9 +68,36 @@ groups:
               datasource:
                 type: prometheus
                 uid: prometheus-nimbus
-              expr: (time() - node_systemd_timer_last_trigger_seconds{name="syncoid-tank.timer"}) > 86400
+              expr: time() - node_systemd_timer_last_trigger_seconds{name="syncoid-tank.timer"}
               instant: true
+              intervalMs: 1000
+              maxDataPoints: 43200
               refId: A
+          - refId: B
+            datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 86400
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - B
+                  reducer:
+                    params: []
+                    type: last
+                  type: query
+              datasource:
+                type: __expr__
+                uid: __expr__
+              expression: A
+              intervalMs: 1000
+              maxDataPoints: 43200
+              refId: B
+              type: threshold
         for: 30m
         labels:
           receiver: homeassistant
