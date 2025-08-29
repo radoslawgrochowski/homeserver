@@ -23,12 +23,11 @@ groups:
               instant: true
               refId: A
         for: 5m
-        noDataState: OK
-        execErrState: Alerting
         labels:
           receiver: homeassistant
         annotations:
           description: Syncoid backup timer or service has failed
+
       - uid: syncoid_overdue_alert
         title: Syncoid Backup Overdue
         condition: A
@@ -46,8 +45,6 @@ groups:
               instant: true
               refId: A
         for: 30m
-        noDataState: OK
-        execErrState: Alerting
         labels:
           receiver: homeassistant
         annotations:

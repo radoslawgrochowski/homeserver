@@ -49,8 +49,6 @@ groups:
               maxDataPoints: 43200
               refId: C
               type: threshold
-        noDataState: Alerting
-        execErrState: Alerting
         for: 30m
         annotations:
           description: Fawkes host has been unreachable for over 5 minutes
