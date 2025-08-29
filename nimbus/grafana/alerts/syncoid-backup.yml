@@ -23,7 +23,7 @@ groups:
               instant: true
               refId: A
         for: 5m
-        noDataState: Alerting
+        noDataState: OK
         execErrState: Alerting
         labels:
           receiver: homeassistant
@@ -46,7 +46,7 @@ groups:
               instant: true
               refId: A
         for: 30m
-        noDataState: Alerting
+        noDataState: OK
         execErrState: Alerting
         labels:
           receiver: homeassistant
