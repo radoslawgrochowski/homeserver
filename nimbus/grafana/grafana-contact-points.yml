@@ -10,4 +10,4 @@ contactPoints:
           url: http://localhost:8123/api/webhook/grafana_alerts
           httpMethod: POST
           title: "{{ .GroupLabels.alertname }}"
-          message: "{{ range .Alerts }}{{ .Annotations.description }}{{ end }}"
+          message: "{{ range .Alerts }}{{ .Status | upper }}: {{ .Labels.alertname }} - {{ .Annotations.description }}{{ end }}"
