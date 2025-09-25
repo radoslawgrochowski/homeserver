@@ -21,6 +21,23 @@
       log_type = "file";
       logfile = "/var/log/nextcloud/nextcloud.log";
       loglevel = 2;
+
+      # this enables thumbnails for videos
+      enabledPreviewProviders = [
+        "OC\\Preview\\BMP"
+        "OC\\Preview\\GIF"
+        "OC\\Preview\\JPEG"
+        "OC\\Preview\\Krita"
+        "OC\\Preview\\MarkDown"
+        "OC\\Preview\\MP3"
+        "OC\\Preview\\OpenDocument"
+        "OC\\Preview\\PNG"
+        "OC\\Preview\\TXT"
+        "OC\\Preview\\XBitmap"
+
+        "OC\\Preview\\Movie"
+        "OC\\Preview\\HEIC"
+      ];
     };
     config = {
       dbtype = "pgsql";
