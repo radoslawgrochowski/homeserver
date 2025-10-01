@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ pkgs, config, lib, ... }:
 {
   services.nextcloud = {
     enable = true;
@@ -9,7 +9,7 @@
     hostName = "nextcloud.nimbus.fard.pl";
     https = true;
     extraApps = {
-      inherit (config.services.nextcloud.package.packages.apps) memories recognize;
+      inherit (config.services.nextcloud.package.packages.apps) memories recognize richdocuments;
     };
     extraAppsEnable = true;
     settings = {
@@ -90,6 +90,44 @@
       bantime = "86400";
       findtime = "43200";
     };
+  };
+
+  systemd.services.nextcloud-config =
+    let
+      inherit (config.services.nextcloud) occ;
+    in
+    {
+      wantedBy = [ "multi-user.target" ];
+      after = [ "nextcloud-setup.service" ];
+      script = ''
+        ${occ}/bin/nextcloud-occ config:system:set maintenance_window_start --type=integer --value=6
+      '';
+      serviceConfig = { Type = "oneshot"; };
+    };
+
+  systemd.services.nextcloud-config-collabora =
+    let
+      inherit (config.services.nextcloud) occ;
+      wopi_url = "http://[::1]:${toString config.services.collabora-online.port}";
+      public_wopi_url = "https://${config.services.collabora-online.settings.server_name}";
+      wopi_allowlist = lib.concatStringsSep "," [ "127.0.0.1" "::1" ];
+    in
+    {
+      wantedBy = [ "multi-user.target" ];
+      after = [ "nextcloud-setup.service" "coolwsd.service" ];
+      requires = [ "coolwsd.service" ];
+      script = ''
+        ${occ}/bin/nextcloud-occ config:app:set richdocuments wopi_url --value ${lib.escapeShellArg wopi_url}
+        ${occ}/bin/nextcloud-occ config:app:set richdocuments public_wopi_url --value ${lib.escapeShellArg public_wopi_url}
+        ${occ}/bin/nextcloud-occ config:app:set richdocuments wopi_allowlist --value ${lib.escapeShellArg wopi_allowlist}
+        ${occ}/bin/nextcloud-occ richdocuments:setup
+      '';
+      serviceConfig = { Type = "oneshot"; };
+    };
+
+  networking.hosts = {
+    "127.0.0.1" = [ config.services.nextcloud.hostName ];
+    "::1" = [ config.services.nextcloud.hostName ];
   };
 }
 

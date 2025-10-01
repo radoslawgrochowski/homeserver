@@ -40,40 +40,58 @@ let
         log "First run, current IP: $CURRENT_IP"
     fi
     
-    log "Fetching current DNS records"
-    RECORD_ID=$(${pkgs.openssh}/bin/ssh -i /etc/ssh/ssh_host_rsa_key \
-        -o StrictHostKeyChecking=yes \
-        -o UserKnownHostsFile=/etc/ssh/ssh_known_hosts \
-        -o LogLevel=ERROR \
-        "$MYDEVIL_USER@$MYDEVIL_HOST" \
-        "devil dns list $DOMAIN" | grep "$RECORD_NAME.*A.*" | head -1 | awk '{print $1}' || echo "")
+    log "Processing DNS records for: $RECORD_NAME"
     
-    if [[ -n "$RECORD_ID" ]]; then
-        log "Found existing record ID: $RECORD_ID, updating..."
+    # Split comma-separated record names and process each one
+    IFS=',' read -ra RECORD_NAMES <<< "$RECORD_NAME"
+    UPDATE_SUCCESS=true
+    
+    for RECORD in "''${RECORD_NAMES[@]}"; do
+        # Trim whitespace
+        RECORD=$(echo "$RECORD" | xargs)
+        log "Processing record: $RECORD"
+        
+        # Fetch current DNS record ID for this specific record
+        RECORD_ID=$(${pkgs.openssh}/bin/ssh -i /etc/ssh/ssh_host_rsa_key \
+            -o StrictHostKeyChecking=yes \
+            -o UserKnownHostsFile=/etc/ssh/ssh_known_hosts \
+            -o LogLevel=ERROR \
+            "$MYDEVIL_USER@$MYDEVIL_HOST" \
+            "devil dns list $DOMAIN" | grep "^[0-9]\+[[:space:]]\+$RECORD[[:space:]]\+A[[:space:]]\+" | head -1 | awk '{print $1}' || echo "")
+        
+        if [[ -n "$RECORD_ID" ]]; then
+            log "Found existing record ID for $RECORD: $RECORD_ID, updating..."
+            ${pkgs.openssh}/bin/ssh -i /etc/ssh/ssh_host_rsa_key \
+                -o StrictHostKeyChecking=yes \
+                -o UserKnownHostsFile=/etc/ssh/ssh_known_hosts \
+                -o LogLevel=ERROR \
+                "$MYDEVIL_USER@$MYDEVIL_HOST" \
+                "devil dns del $DOMAIN $RECORD_ID"
+            log "Deleted old record for $RECORD"
+        else
+            log "No existing record found for $RECORD, creating new..."
+        fi
+        
+        # Add new DNS record
         ${pkgs.openssh}/bin/ssh -i /etc/ssh/ssh_host_rsa_key \
             -o StrictHostKeyChecking=yes \
             -o UserKnownHostsFile=/etc/ssh/ssh_known_hosts \
             -o LogLevel=ERROR \
             "$MYDEVIL_USER@$MYDEVIL_HOST" \
-            "devil dns del $DOMAIN $RECORD_ID"
-        log "Deleted old record"
-    else
-        log "No existing record found, creating new..."
-    fi
+            "devil dns add $DOMAIN $RECORD A $CURRENT_IP"
+        
+        if [[ $? -eq 0 ]]; then
+            log "Successfully updated DNS record: $RECORD -> $CURRENT_IP"
+        else
+            log "ERROR: Failed to update DNS record for $RECORD"
+            UPDATE_SUCCESS=false
+        fi
+    done
     
-    # Add new DNS record
-    ${pkgs.openssh}/bin/ssh -i /etc/ssh/ssh_host_rsa_key \
-        -o StrictHostKeyChecking=yes \
-        -o UserKnownHostsFile=/etc/ssh/ssh_known_hosts \
-        -o LogLevel=ERROR \
-        "$MYDEVIL_USER@$MYDEVIL_HOST" \
-        "devil dns add $DOMAIN $RECORD_NAME A $CURRENT_IP"
-    
-    if [[ $? -eq 0 ]]; then
-        log "Successfully updated DNS record: $RECORD_NAME -> $CURRENT_IP"
+    if [[ "$UPDATE_SUCCESS" == true ]]; then
         echo "$CURRENT_IP" > "$CURRENT_IP_FILE"
     else
-        log "ERROR: Failed to update DNS record"
+        log "ERROR: One or more DNS record updates failed"
         exit 1
     fi
     
