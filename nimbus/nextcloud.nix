@@ -70,6 +70,8 @@
       if ($host != "${config.services.nextcloud.hostName}") {
         return 444;
       }
+
+      add_header X-XSS-Protection "1; mode=block";
     '';
   };
 
