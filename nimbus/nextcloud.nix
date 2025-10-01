@@ -38,6 +38,8 @@
         "OC\\Preview\\Movie"
         "OC\\Preview\\HEIC"
       ];
+
+      overwrite.cli.url = "https://${config.services.nextcloud.hostName}";
     };
     config = {
       dbtype = "pgsql";
