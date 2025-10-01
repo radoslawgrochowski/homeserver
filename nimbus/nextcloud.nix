@@ -47,6 +47,7 @@
       adminpassFile = config.age.secrets.nextcloud-admin-password.path;
     };
     maxUploadSize = "16G";
+    phpOptions."opcache.interned_strings_buffer" = "16";
   };
 
   services.blocky.settings.customDNS.mapping."${config.services.nextcloud.hostName}" =
