@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
   services.home-assistant = {
     enable = true;
@@ -16,9 +16,12 @@
           }
         ];
       };
-      "automation manual" = (import ./temperature-alerts.nix) ++ (import ./grafana-alerts.nix);
-      input_datetime = (import ./roborock.nix).input_datetime;
-      script = (import ./roborock.nix).script;
+      "automation manual" =
+        (import ./temperature-alerts.nix)
+        ++ (import ./grafana-alerts.nix)
+        ++ (import ./roborock.nix { inherit lib; }).automation;
+      input_datetime = (import ./roborock.nix { inherit lib; }).input_datetime;
+      script = (import ./roborock.nix { inherit lib; }).script;
       "automation ui" = "!include automations.yaml";
       assist_pipeline = { };
       dhcp = { };
