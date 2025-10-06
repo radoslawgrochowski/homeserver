@@ -17,6 +17,8 @@
         ];
       };
       "automation manual" = (import ./temperature-alerts.nix) ++ (import ./grafana-alerts.nix);
+      input_datetime = (import ./roborock.nix).input_datetime;
+      script = (import ./roborock.nix).script;
       "automation ui" = "!include automations.yaml";
       assist_pipeline = { };
       dhcp = { };
