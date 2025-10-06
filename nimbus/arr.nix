@@ -1,4 +1,5 @@
-{ config, lib, ... }: {
+{ config, lib, ... }:
+{
   systemd.tmpfiles.rules = [
     "d /media/movies 774 media media - -"
     "d /media/tv 774 media media - -"
@@ -28,8 +29,8 @@
 
   # FIXME config does not work properly
   # need to edit /var/lib/sabnzbd/sabnzbd.ini manually:
-  #   change host to 0.0.0.0 
-  #   change port to 8800 
+  #   change host to 0.0.0.0
+  #   change port to 8800
   # and then reload
   services.sabnzbd = {
     enable = true;
@@ -144,12 +145,20 @@
             {
               # blocks DV without fallback
               trash_ids = [ "9b27ab6498ec0f31a3353992e19434ca" ];
-              assign_scores_to = [{ name = "WEB-1080p"; } { name = "WEB-2160p"; }];
+              assign_scores_to = [
+                { name = "WEB-1080p"; }
+                { name = "WEB-2160p"; }
+              ];
             }
             {
               # enable x265
               trash_ids = [ "47435ece6b99a0b477caf360e79ba0bb" ];
-              assign_scores_to = [{ name = "WEB-1080p"; score = 0; }];
+              assign_scores_to = [
+                {
+                  name = "WEB-1080p";
+                  score = 0;
+                }
+              ];
             }
           ];
 
@@ -169,9 +178,11 @@
     "sonarr-api_key:${config.age.secrets.sonarr-api-key.path}"
   ];
 
-  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-    "unrar"
-  ];
+  nixpkgs.config.allowUnfreePredicate =
+    pkg:
+    builtins.elem (lib.getName pkg) [
+      "unrar"
+    ];
 
   services.nginx.virtualHosts."nimbus.fard.pl" = {
     locations."/radarr" = {
@@ -191,7 +202,7 @@
     };
   };
 
-  # FIXME 
+  # FIXME
   nixpkgs.config.permittedInsecurePackages = [
     "aspnetcore-runtime-6.0.36"
     "aspnetcore-runtime-wrapped-6.0.36"

@@ -7,6 +7,9 @@ check:
 update: 
   nix flake update
 
+format:
+  nix fmt ./**/*.nix
+
 dry-activate HOST:
   nixos-rebuild dry-activate --flake . --target-host {{HOST}}
 

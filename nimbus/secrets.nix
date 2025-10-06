@@ -1,4 +1,5 @@
-{ ... }: {
+{ ... }:
+{
   age.secrets.nextcloud-admin-password = {
     file = ../secrets/nextcloud-admin-password.age;
     owner = "nextcloud";

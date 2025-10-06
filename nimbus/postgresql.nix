@@ -1,4 +1,5 @@
-{ ... }: {
+{ ... }:
+{
   services.postgresqlBackup = {
     enable = true;
     location = "/var/backup/postgresql";

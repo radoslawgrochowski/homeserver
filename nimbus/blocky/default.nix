@@ -19,7 +19,10 @@ in
 
       bootstrapDns = {
         upstream = "https://one.one.one.one/dns-query";
-        ips = [ "1.1.1.1" "1.0.0.1" ];
+        ips = [
+          "1.1.1.1"
+          "1.0.0.1"
+        ];
       };
 
       blocking = {
@@ -74,7 +77,6 @@ in
 
       };
 
-
       customDNS = {
         customTTL = "1h";
         mapping = {
@@ -90,18 +92,25 @@ in
 
   };
 
-  networking.firewall.allowedTCPPorts = [ 53 httpPort ];
+  networking.firewall.allowedTCPPorts = [
+    53
+    httpPort
+  ];
   networking.firewall.allowedUDPPorts = [ 53 ];
 
-  services.grafana.provision.dashboards.settings.providers = [{
-    name = "Blocky";
-    options.path = ./grafana-dashboard-blocky.json;
-  }];
+  services.grafana.provision.dashboards.settings.providers = [
+    {
+      name = "Blocky";
+      options.path = ./grafana-dashboard-blocky.json;
+    }
+  ];
 
   services.prometheus = {
-    scrapeConfigs = [{
-      job_name = "blocky";
-      static_configs = [{ targets = [ "localhost:${toString httpPort}" ]; }];
-    }];
+    scrapeConfigs = [
+      {
+        job_name = "blocky";
+        static_configs = [ { targets = [ "localhost:${toString httpPort}" ]; } ];
+      }
+    ];
   };
 }

@@ -1,4 +1,9 @@
-{ pkgs, config, lib, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 {
   services.nextcloud = {
     enable = true;
@@ -107,7 +112,9 @@
       script = ''
         ${occ}/bin/nextcloud-occ config:system:set maintenance_window_start --type=integer --value=6
       '';
-      serviceConfig = { Type = "oneshot"; };
+      serviceConfig = {
+        Type = "oneshot";
+      };
     };
 
   systemd.services.nextcloud-config-collabora =
@@ -115,11 +122,17 @@
       inherit (config.services.nextcloud) occ;
       wopi_url = "http://[::1]:${toString config.services.collabora-online.port}";
       public_wopi_url = "https://${config.services.collabora-online.settings.server_name}";
-      wopi_allowlist = lib.concatStringsSep "," [ "127.0.0.1" "::1" ];
+      wopi_allowlist = lib.concatStringsSep "," [
+        "127.0.0.1"
+        "::1"
+      ];
     in
     {
       wantedBy = [ "multi-user.target" ];
-      after = [ "nextcloud-setup.service" "coolwsd.service" ];
+      after = [
+        "nextcloud-setup.service"
+        "coolwsd.service"
+      ];
       requires = [ "coolwsd.service" ];
       script = ''
         ${occ}/bin/nextcloud-occ config:app:set richdocuments wopi_url --value ${lib.escapeShellArg wopi_url}
@@ -127,7 +140,9 @@
         ${occ}/bin/nextcloud-occ config:app:set richdocuments wopi_allowlist --value ${lib.escapeShellArg wopi_allowlist}
         ${occ}/bin/nextcloud-occ richdocuments:setup
       '';
-      serviceConfig = { Type = "oneshot"; };
+      serviceConfig = {
+        Type = "oneshot";
+      };
     };
 
   networking.hosts = {
@@ -135,4 +150,3 @@
     "::1" = [ config.services.nextcloud.hostName ];
   };
 }
-

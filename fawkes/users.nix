@@ -9,7 +9,10 @@
 
       fawkes = {
         isNormalUser = true;
-        extraGroups = [ "wheel" "tank" ];
+        extraGroups = [
+          "wheel"
+          "tank"
+        ];
         hashedPassword = "$y$j9T$eGyvfTniP/7pBUWxzdyde.$eRZJHycdeyB7.MN1wBYQ8FqNhfWslGTrRsei/IwrRdA";
         openssh.authorizedKeys.keys = [
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEFHfIr8ovAQXCRcDCsIeGHXF5BKi5S9kZ88WxkMKG6M rg@fard.pl"
@@ -32,5 +35,8 @@
     }
   ];
 
-  nix.settings.trusted-users = [ "root" "fawkes" ];
+  nix.settings.trusted-users = [
+    "root"
+    "fawkes"
+  ];
 }

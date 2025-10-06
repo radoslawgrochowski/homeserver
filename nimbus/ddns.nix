@@ -2,32 +2,32 @@
 let
   ddnsScript = pkgs.writeShellScript "mydevil-ddns" ''
     set -euo pipefail
-    
+
     # Load configuration from encrypted file
     source ${config.age.secrets.ddns-config.path}
     STATE_DIR="/var/lib/ddns"
     CURRENT_IP_FILE="$STATE_DIR/current_ip"
     LOG_FILE="/var/log/ddns.log"
-    
+
     # Ensure state directory exists
     mkdir -p "$STATE_DIR"
-    
+
     # Function to log messages
     log() {
         echo "$(date '+%Y-%m-%d %H:%M:%S') - $1" | tee -a "$LOG_FILE"
     }
-    
+
     log "Starting DDNS check"
-    
+
     CURRENT_IP=$(${pkgs.curl}/bin/curl -s --max-time 30 https://ipinfo.io/ip || echo "")
-    
+
     if [[ -z "$CURRENT_IP" ]]; then
         log "ERROR: Failed to get current IP"
         exit 1
     fi
-    
+
     log "Current public IP: $CURRENT_IP"
-    
+
     # Check if IP has changed
     if [[ -f "$CURRENT_IP_FILE" ]]; then
         STORED_IP=$(cat "$CURRENT_IP_FILE")
@@ -39,13 +39,13 @@ let
     else
         log "First run, current IP: $CURRENT_IP"
     fi
-    
+
     log "Processing DNS records for: $RECORD_NAME"
-    
+
     # Split comma-separated record names and process each one
     IFS=',' read -ra RECORD_NAMES <<< "$RECORD_NAME"
     UPDATE_SUCCESS=true
-    
+
     for RECORD in "''${RECORD_NAMES[@]}"; do
         # Trim whitespace
         RECORD=$(echo "$RECORD" | xargs)
@@ -87,14 +87,14 @@ let
             UPDATE_SUCCESS=false
         fi
     done
-    
+
     if [[ "$UPDATE_SUCCESS" == true ]]; then
         echo "$CURRENT_IP" > "$CURRENT_IP_FILE"
     else
         log "ERROR: One or more DNS record updates failed"
         exit 1
     fi
-    
+
     log "DDNS update completed successfully"
   '';
 in
@@ -134,8 +134,6 @@ in
     };
   };
 
-
-
   systemd.tmpfiles.rules = [
     "d /var/log/ddns 0755 ddns ddns -"
     "f /var/log/ddns.log 0644 ddns ddns -"
@@ -156,4 +154,3 @@ in
     };
   };
 }
-

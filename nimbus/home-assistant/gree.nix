@@ -1,10 +1,11 @@
 # based on https://github.com/azuwis/nix-config/blob/6d0d231d7adde865d0a8caf2cc22e6964d559c30/pkgs/by-name/gr/gree/package.nix
 
-{ lib
-, buildHomeAssistantComponent
-, fetchFromGitHub
-, home-assistant
-, nix-update-script
+{
+  lib,
+  buildHomeAssistantComponent,
+  fetchFromGitHub,
+  home-assistant,
+  nix-update-script,
 }:
 
 buildHomeAssistantComponent rec {
@@ -19,7 +20,10 @@ buildHomeAssistantComponent rec {
     hash = "sha256-zo4FgYjHP+0nLdmwBpwJuqW0yvUw1rKhlZICDKXnbjY=";
   };
 
-  propagatedBuildInputs = with home-assistant.python.pkgs; [ pycryptodome aiofiles ];
+  propagatedBuildInputs = with home-assistant.python.pkgs; [
+    pycryptodome
+    aiofiles
+  ];
 
   dontBuild = true;
 

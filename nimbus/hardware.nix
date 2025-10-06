@@ -1,13 +1,28 @@
-{ config, pkgs, lib, modulesPath, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  modulesPath,
+  ...
+}:
 
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
+  boot.initrd.availableKernelModules = [
+    "xhci_pci"
+    "ahci"
+    "usbhid"
+    "usb_storage"
+    "sd_mod"
+  ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-amd" "amdgpu" ];
+  boot.kernelModules = [
+    "kvm-amd"
+    "amdgpu"
+  ];
   boot.extraModulePackages = [ ];
 
   boot.supportedFilesystems = [ "zfs" ];
@@ -23,7 +38,10 @@
   fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/5ED5-7973";
     fsType = "vfat";
-    options = [ "fmask=0077" "dmask=0077" ];
+    options = [
+      "fmask=0077"
+      "dmask=0077"
+    ];
   };
 
   fileSystems."/media" = {
@@ -31,7 +49,7 @@
     fsType = "ext4";
   };
 
-  swapDevices = [{ device = "/dev/disk/by-uuid/fc535b1c-689f-4aed-9fcf-c4056c0d04a8"; }];
+  swapDevices = [ { device = "/dev/disk/by-uuid/fc535b1c-689f-4aed-9fcf-c4056c0d04a8"; } ];
 
   networking.useDHCP = lib.mkDefault true;
   networking.interfaces.eth0.useDHCP = lib.mkDefault true;

@@ -11,11 +11,22 @@
     };
   };
 
-
-  outputs = inputs@{ self, nixpkgs, flake-utils, agenix, nixpkgs-unstable }:
+  outputs =
+    inputs@{
+      self,
+      nixpkgs,
+      flake-utils,
+      agenix,
+      nixpkgs-unstable,
+    }:
     let
       commonModules = [
-        ({ overlays, ... }: { nixpkgs.overlays = (nixpkgs.lib.attrValues (import ./overlays.nix { inherit inputs; })); })
+        (
+          { overlays, ... }:
+          {
+            nixpkgs.overlays = (nixpkgs.lib.attrValues (import ./overlays.nix { inherit inputs; }));
+          }
+        )
         agenix.nixosModules.default
         ./common
       ];
@@ -24,33 +35,37 @@
       nixosConfigurations.nimbus = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = commonModules ++ [ ./nimbus ];
-        specialArgs = {
-          inherit inputs;
-        };
+        specialArgs = { inherit inputs; };
       };
       nixosConfigurations.fawkes = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = commonModules ++ [ ./fawkes ];
-        specialArgs = {
-          inherit inputs;
-        };
+        specialArgs = { inherit inputs; };
       };
-    } // flake-utils.lib.eachDefaultSystem
-      (system:
-        let
-          pkgs = import nixpkgs { inherit system; };
-        in
-        {
-          devShells.default = pkgs.mkShell {
-            packages = with pkgs; [
-              just
-              agenix.packages."${system}".default
-            ];
-          };
-        });
+    }
+    // flake-utils.lib.eachDefaultSystem (
+      system:
+      let
+        pkgs = import nixpkgs { inherit system; };
+      in
+      {
+        devShells.default = pkgs.mkShell {
+          packages = with pkgs; [
+            just
+            agenix.packages."${system}".default
+            nixfmt-rfc-style
+          ];
+        };
+
+        formatter = pkgs.nixfmt-rfc-style;
+      }
+    );
 
   nixConfig = {
-    experimental-features = [ "nix-command" "flakes" ];
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
     extra-substituters = [
       "https://cache.nixos.org"
       "https://radoslawgrochowski-homeserver.cachix.org"

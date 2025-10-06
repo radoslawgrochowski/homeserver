@@ -1,17 +1,20 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   services.home-assistant = {
     enable = true;
     package = pkgs.unstable.home-assistant;
     config = {
       homeassistant = {
-        auth_providers = [{
-          type = "trusted_networks";
-          trusted_networks = [
-            "0.0.0.0/0"
-            "::/0"
-          ];
-          allow_bypass_login = true;
-        }];
+        auth_providers = [
+          {
+            type = "trusted_networks";
+            trusted_networks = [
+              "0.0.0.0/0"
+              "::/0"
+            ];
+            allow_bypass_login = true;
+          }
+        ];
       };
       "automation manual" = (import ./temperature-alerts.nix) ++ (import ./grafana-alerts.nix);
       "automation ui" = "!include automations.yaml";
@@ -51,7 +54,6 @@
       (pkgs.callPackage ./gree.nix { })
     ];
   };
-
 
   networking.firewall.allowedTCPPorts = [ 8123 ];
   services.nginx.virtualHosts."nimbus.fard.pl" = {

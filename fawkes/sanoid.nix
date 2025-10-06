@@ -1,4 +1,5 @@
-{ ... }: {
+{ ... }:
+{
   services.sanoid = {
     enable = true;
     interval = "hourly";
@@ -15,4 +16,3 @@
     };
   };
 }
-
