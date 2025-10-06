@@ -1,8 +1,6 @@
 { lib }:
 let
   vacuumEntity = "vacuum.roborock_s5_max";
-  quietHoursStart = 22;
-  quietHoursEnd = 8;
 
   slugify = name: builtins.replaceStrings [ "-" ] [ "_" ] name;
   uppercaseSlugify = name: slugify (lib.strings.toUpper name);
@@ -62,10 +60,91 @@ let
     ];
   };
 
-  mkSuggestionAutomation = name: room: {
-    id = "roborock_suggest_${slugify name}_cleaning";
-    alias = "Suggest ${name} Cleaning";
-    description = "Suggest cleaning ${name} if not cleaned in ${toString room.cleaningIntervalDays} days";
+  roomNames = builtins.attrNames rooms;
+
+  inputDatetimes = builtins.listToAttrs (
+    map (name: {
+      name = "roborock_${slugify name}_last_cleaned";
+      value = mkInputDatetime name;
+    }) roomNames
+  );
+
+  scripts =
+    builtins.listToAttrs (
+      map (name: {
+        name = "roborock_clean_${slugify name}";
+        value = mkScript name rooms.${name};
+      }) roomNames
+    )
+    // {
+      roborock_clean_overdue_rooms = {
+        alias = "Clean Overdue Rooms";
+        icon = "mdi:robot-vacuum";
+        sequence = [
+          {
+            service = "vacuum.send_command";
+            target = {
+              entity_id = vacuumEntity;
+            };
+            data = {
+              command = "app_segment_clean";
+              params = ''
+                {%- set ns = namespace(overdue_room_ids=[]) %}
+                {%- for room_name, room_data in {
+                  "living-room": {"interval": ${toString rooms.living-room.cleaningIntervalDays}, "id": ${toString rooms.living-room.id}},
+                  "kitchen": {"interval": ${toString rooms.kitchen.cleaningIntervalDays}, "id": ${toString rooms.kitchen.id}},
+                  "hall": {"interval": ${toString rooms.hall.cleaningIntervalDays}, "id": ${toString rooms.hall.id}},
+                  "office": {"interval": ${toString rooms.office.cleaningIntervalDays}, "id": ${toString rooms.office.id}}
+                }.items() %}
+                  {%- set room_slug = room_name | replace("-", "_") %}
+                  {%- set last_cleaned = states('input_datetime.roborock_' + room_slug + '_last_cleaned') | as_datetime %}
+                  {%- if last_cleaned and (now().date() - last_cleaned.date()).days >= room_data.interval %}
+                    {%- set ns.overdue_room_ids = ns.overdue_room_ids + [room_data.id] %}
+                  {%- endif %}
+                {%- endfor %}
+                {{ ns.overdue_room_ids }}
+              '';
+            };
+          }
+          {
+            repeat = {
+              for_each = ''
+                {%- set ns = namespace(overdue_rooms=[]) %}
+                {%- for room_name, room_data in {
+                  "living-room": {"interval": ${toString rooms.living-room.cleaningIntervalDays}},
+                  "kitchen": {"interval": ${toString rooms.kitchen.cleaningIntervalDays}},
+                  "hall": {"interval": ${toString rooms.hall.cleaningIntervalDays}},
+                  "office": {"interval": ${toString rooms.office.cleaningIntervalDays}}
+                }.items() %}
+                  {%- set room_slug = room_name | replace("-", "_") %}
+                  {%- set last_cleaned = states('input_datetime.roborock_' + room_slug + '_last_cleaned') | as_datetime %}
+                  {%- if last_cleaned and (now().date() - last_cleaned.date()).days >= room_data.interval %}
+                    {%- set ns.overdue_rooms = ns.overdue_rooms + [room_name] %}
+                  {%- endif %}
+                {%- endfor %}
+                {{ ns.overdue_rooms }}
+              '';
+              sequence = [
+                {
+                  service = "input_datetime.set_datetime";
+                  target = {
+                    entity_id = "input_datetime.roborock_{{ repeat.item | replace('-', '_') }}_last_cleaned";
+                  };
+                  data = {
+                    datetime = "{{ now().isoformat() }}";
+                  };
+                }
+              ];
+            };
+          }
+        ];
+      };
+    };
+
+  overdueCleaningAutomation = {
+    id = "roborock_suggest_overdue_cleaning";
+    alias = "Suggest Overdue Room Cleaning";
+    description = "Suggest cleaning rooms that are overdue for cleaning";
     trigger = [
       {
         platform = "time";
@@ -75,11 +154,22 @@ let
     condition = [
       {
         condition = "template";
-        value_template = "{{ (now().date() - (states('input_datetime.roborock_${slugify name}_last_cleaned') | as_datetime).date()).days >= ${toString room.cleaningIntervalDays} }}";
-      }
-      {
-        condition = "template";
-        value_template = "{{ now().hour >= ${toString quietHoursEnd} and now().hour < ${toString quietHoursStart} }}";
+        value_template = ''
+          {%- set ns = namespace(overdue_rooms=[]) %}
+          {%- for room_name, room_data in {
+            "living-room": {"interval": ${toString rooms.living-room.cleaningIntervalDays}},
+            "kitchen": {"interval": ${toString rooms.kitchen.cleaningIntervalDays}},
+            "hall": {"interval": ${toString rooms.hall.cleaningIntervalDays}},
+            "office": {"interval": ${toString rooms.office.cleaningIntervalDays}}
+          }.items() %}
+            {%- set room_slug = room_name | replace("-", "_") %}
+            {%- set last_cleaned = states('input_datetime.roborock_' + room_slug + '_last_cleaned') | as_datetime %}
+            {%- if last_cleaned and (now().date() - last_cleaned.date()).days >= room_data.interval %}
+              {%- set ns.overdue_rooms = ns.overdue_rooms + [room_name] %}
+            {%- endif %}
+          {%- endfor %}
+          {{ ns.overdue_rooms | length > 0 }}
+        '';
       }
       {
         condition = "state";
@@ -91,15 +181,30 @@ let
       {
         service = "notify.notify";
         data = {
-          title = "🧹 ${name} Cleaning";
-          message = "${name} hasn't been cleaned for ${toString room.cleaningIntervalDays}+ days. Last cleaned: {{ states('input_datetime.roborock_${slugify name}_last_cleaned') }}";
+          title = "🧹 Room Cleaning";
+          message = ''
+            {%- set ns = namespace(overdue_rooms=[]) %}
+            {%- for room_name, room_data in {
+              "living-room": {"interval": ${toString rooms.living-room.cleaningIntervalDays}},
+              "kitchen": {"interval": ${toString rooms.kitchen.cleaningIntervalDays}},
+              "hall": {"interval": ${toString rooms.hall.cleaningIntervalDays}},
+              "office": {"interval": ${toString rooms.office.cleaningIntervalDays}}
+            }.items() %}
+              {%- set room_slug = room_name | replace("-", "_") %}
+              {%- set last_cleaned = states('input_datetime.roborock_' + room_slug + '_last_cleaned') | as_datetime %}
+              {%- if last_cleaned and (now().date() - last_cleaned.date()).days >= room_data.interval %}
+                {%- set ns.overdue_rooms = ns.overdue_rooms + [room_name] %}
+              {%- endif %}
+            {%- endfor %}
+            These rooms need cleaning: {{ ns.overdue_rooms | join(', ') }}
+          '';
           data = {
             priority = "normal";
             tag = "room_cleaning_suggestion";
             actions = [
               {
-                action = "CLEAN_${uppercaseSlugify name}";
-                title = "Clean ${name}";
+                action = "CLEAN_OVERDUE";
+                title = "Clean";
               }
             ];
           };
@@ -109,51 +214,60 @@ let
     mode = "single";
   };
 
-  roomNames = builtins.attrNames rooms;
-
-  inputDatetimes = builtins.listToAttrs (
+  actionHandlers =
     map (name: {
-      name = "roborock_${slugify name}_last_cleaned";
-      value = mkInputDatetime name;
+      platform = "event";
+      event_type = "mobile_app_notification_action";
+      event_data = {
+        action = "CLEAN_${uppercaseSlugify name}";
+      };
     }) roomNames
-  );
-
-  scripts = builtins.listToAttrs (
-    map (name: {
-      name = "roborock_clean_${slugify name}";
-      value = mkScript name rooms.${name};
-    }) roomNames
-  );
-
-  suggestionAutomations = map (name: mkSuggestionAutomation name rooms.${name}) roomNames;
-
-  actionHandlers = map (name: {
-    platform = "event";
-    event_type = "mobile_app_notification_action";
-    event_data = {
-      action = "CLEAN_${uppercaseSlugify name}";
-    };
-  }) roomNames;
-
-  actionChoices = map (name: {
-    conditions = [
+    ++ [
       {
-        condition = "template";
-        value_template = "{{ trigger.event.data.action == 'CLEAN_${uppercaseSlugify name}' }}";
+        platform = "event";
+        event_type = "mobile_app_notification_action";
+        event_data = {
+          action = "CLEAN_OVERDUE";
+        };
       }
     ];
-    sequence = [
+
+  actionChoices =
+    map (name: {
+      conditions = [
+        {
+          condition = "template";
+          value_template = "{{ trigger.event.data.action == 'CLEAN_${uppercaseSlugify name}' }}";
+        }
+      ];
+      sequence = [
+        {
+          service = "script.roborock_clean_${slugify name}";
+        }
+      ];
+    }) roomNames
+    ++ [
       {
-        service = "script.roborock_clean_${slugify name}";
+        conditions = [
+          {
+            condition = "template";
+            value_template = "{{ trigger.event.data.action == 'CLEAN_OVERDUE' }}";
+          }
+        ];
+        sequence = [
+          {
+            service = "script.roborock_clean_overdue_rooms";
+          }
+        ];
       }
     ];
-  }) roomNames;
 
 in
 {
   input_datetime = inputDatetimes;
   script = scripts;
-  automation = suggestionAutomations ++ [
+  automation = [
+    overdueCleaningAutomation
     {
       id = "roborock_handle_notification_actions";
       alias = "Handle Room Cleaning Notification Actions";
