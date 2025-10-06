@@ -18,7 +18,7 @@
     condition = [
       {
         condition = "state";
-        entity_id = "climate.gree_climate_gree_c03937a1ae5c_2";
+        entity_id = "climate.gree_climate_gree_c03937a1ae5c";
         state = "off";
       }
     ];
@@ -68,13 +68,13 @@
       {
         service = "climate.turn_on";
         target = {
-          entity_id = "climate.gree_climate_gree_c03937a1ae5c_2";
+          entity_id = "climate.gree_climate_gree_c03937a1ae5c";
         };
       }
       {
         service = "climate.set_hvac_mode";
         target = {
-          entity_id = "climate.gree_climate_gree_c03937a1ae5c_2";
+          entity_id = "climate.gree_climate_gree_c03937a1ae5c";
         };
         data = {
           hvac_mode = "cool";
