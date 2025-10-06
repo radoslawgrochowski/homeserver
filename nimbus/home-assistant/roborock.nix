@@ -19,7 +19,7 @@ let
     hall = {
       id = 18;
       icon = "mdi:door";
-      cleaningIntervalDays = 3;
+      cleaningIntervalDays = 2;
     };
     office = {
       id = 19;
