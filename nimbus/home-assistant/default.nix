@@ -15,6 +15,7 @@
       "mqtt"
       "recorder"
       "roborock"
+      "met"
     ];
 
     customComponents = [
@@ -23,6 +24,7 @@
 
     customLovelaceModules = [
       (pkgs.callPackage ./bubble-card.nix { })
+      pkgs.home-assistant-custom-lovelace-modules.clock-weather-card
     ];
 
     config = {
