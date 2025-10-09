@@ -20,11 +20,13 @@
 
     customComponents = [
       (pkgs.callPackage ./gree.nix { })
+      (pkgs.callPackage ./rozkladzik.nix { })
     ];
 
-    customLovelaceModules = [
+    customLovelaceModules = with pkgs.home-assistant-custom-lovelace-modules; [
       (pkgs.callPackage ./bubble-card.nix { })
-      pkgs.home-assistant-custom-lovelace-modules.clock-weather-card
+      clock-weather-card
+      card-mod
     ];
 
     config = {
@@ -62,6 +64,30 @@
           platform = "gree";
           host = "192.168.0.112";
           mac = "C0:39:37:A1:AE:5C";
+        }
+      ];
+      frontend = {
+        extra_module_url = [
+          "/local/nixos-lovelace-modules/card-mod.js"
+        ];
+      };
+
+      sensor = [
+        {
+          platform = "rozkladzik";
+          city = "warszawa";
+          stops = [
+            {
+              id = 190;
+              name = "Wawrzyszewska";
+              stops_group_mode = true;
+            }
+            {
+              id = 271;
+              name = "Ostroroga";
+              stops_group_mode = true;
+            }
+          ];
         }
       ];
     };
