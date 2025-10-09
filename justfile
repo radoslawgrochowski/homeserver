@@ -20,3 +20,5 @@ switch HOST *PARAMS:
 boot HOST *PARAMS:
   nixos-rebuild boot --flake . --target-host {{HOST}} --use-remote-sudo {{PARAMS}}
 
+fetchgit *args:
+  fd .nix --exec update-nix-fetchgit -v {{args}}

@@ -54,6 +54,8 @@
             just
             agenix.packages."${system}".default
             nixfmt-rfc-style
+            fd
+            update-nix-fetchgit
           ];
         };
 

@@ -21,8 +21,8 @@
       (pkgs.callPackage ./gree.nix { })
     ];
 
-    customLovelaceModules = with pkgs.unstable.home-assistant-custom-lovelace-modules; [
-      bubble-card
+    customLovelaceModules = [
+      (pkgs.callPackage ./bubble-card.nix { })
     ];
 
     config = {
