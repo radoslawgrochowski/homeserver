@@ -2,7 +2,29 @@
 {
   services.home-assistant = {
     enable = true;
-    package = pkgs.unstable.home-assistant;
+    package = pkgs.home-assistant;
+
+    # https://github.com/NixOS/nixpkgs/blob/master/pkgs/servers/home-assistant/component-packages.nix
+    extraComponents = [
+      "default_config"
+
+      "google_translate"
+      "history"
+      "history_stats"
+      "isal"
+      "mqtt"
+      "recorder"
+      "roborock"
+    ];
+
+    customComponents = [
+      (pkgs.callPackage ./gree.nix { })
+    ];
+
+    customLovelaceModules = with pkgs.unstable.home-assistant-custom-lovelace-modules; [
+      bubble-card
+    ];
+
     config = {
       homeassistant = {
         auth_providers = [
@@ -41,23 +63,6 @@
         }
       ];
     };
-
-    # https://github.com/NixOS/nixpkgs/blob/master/pkgs/servers/home-assistant/component-packages.nix
-    extraComponents = [
-      "default_config"
-
-      "google_translate"
-      "history"
-      "history_stats"
-      "isal"
-      "mqtt"
-      "recorder"
-      "roborock"
-    ];
-
-    customComponents = [
-      (pkgs.callPackage ./gree.nix { })
-    ];
   };
 
   networking.firewall.allowedTCPPorts = [ 8123 ];

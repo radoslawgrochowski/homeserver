@@ -12,12 +12,12 @@ let
       cleaningIntervalDays = 2;
     };
     kitchen = {
-      id = 17;
+      id = 18;
       icon = "mdi:chef-hat";
       cleaningIntervalDays = 2;
     };
     hall = {
-      id = 18;
+      id = 17;
       icon = "mdi:door";
       cleaningIntervalDays = 2;
     };
