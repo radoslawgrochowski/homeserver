@@ -45,9 +45,10 @@
       "automation manual" =
         (import ./temperature-alerts.nix)
         ++ (import ./grafana-alerts.nix)
-        ++ (import ./roborock.nix { inherit lib; }).automation;
+        ++ (import ./roborock.nix { inherit lib; }).automation
+        ++ (import ./light-switches.nix { inherit lib; }).automation;
       input_datetime = (import ./roborock.nix { inherit lib; }).input_datetime;
-      script = (import ./roborock.nix { inherit lib; }).script;
+      script = (import ./roborock.nix { inherit lib; }).script // (import ./light-switches.nix { inherit lib; }).script;
       "automation ui" = "!include automations.yaml";
       assist_pipeline = { };
       dhcp = { };
