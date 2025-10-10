@@ -1,4 +1,9 @@
-{ pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 {
   services.home-assistant = {
     enable = true;
@@ -20,7 +25,7 @@
 
     customComponents = [
       (pkgs.callPackage ./gree.nix { })
-      (pkgs.callPackage ./rozkladzik.nix { })
+      (pkgs.callPackage ./ztm.nix { })
     ];
 
     customLovelaceModules = with pkgs.home-assistant-custom-lovelace-modules; [
@@ -48,7 +53,9 @@
         ++ (import ./roborock.nix { inherit lib; }).automation
         ++ (import ./light-switches.nix { inherit lib; }).automation;
       input_datetime = (import ./roborock.nix { inherit lib; }).input_datetime;
-      script = (import ./roborock.nix { inherit lib; }).script // (import ./light-switches.nix { inherit lib; }).script;
+      script =
+        (import ./roborock.nix { inherit lib; }).script
+        // (import ./light-switches.nix { inherit lib; }).script;
       "automation ui" = "!include automations.yaml";
       assist_pipeline = { };
       dhcp = { };
@@ -75,23 +82,35 @@
 
       sensor = [
         {
-          platform = "rozkladzik";
-          city = "warszawa";
-          stops = [
-            {
-              id = 190;
-              name = "Wawrzyszewska";
-              stops_group_mode = true;
-            }
-            {
-              id = 271;
-              name = "Ostroroga";
-              stops_group_mode = true;
-            }
-          ];
+          platform = "ztm";
+          api_key = "!secret api-um-warszawa-key";
+          lines =
+            let
+              mkLines =
+                stop_id: numbers: stop_numbers:
+                builtins.concatMap (
+                  num:
+                  builtins.map (stop_num: {
+                    number = num;
+                    inherit stop_id;
+                    stop_number = stop_num;
+                  }) stop_numbers
+                ) numbers;
+            in
+            mkLines 5068 [ 24 23 50 20 ] [ "03" "04" ]
+            ++ mkLines 5124 [ 103 ] [ "01" "02" ]
+            ++ mkLines 5124 [ 136 ] [ "03" ]
+            ++ mkLines 5124 [ 106 ] [ "05" ];
         }
       ];
     };
+  };
+
+  age.secrets.home-assistant-secrets = {
+    file = ../../secrets/home-assistant-secrets.age;
+    path = "${config.services.home-assistant.configDir}/secrets.yaml";
+    owner = config.systemd.services.home-assistant.serviceConfig.User;
+    group = config.systemd.services.home-assistant.serviceConfig.Group;
   };
 
   networking.firewall.allowedTCPPorts = [ 8123 ];

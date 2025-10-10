@@ -12,6 +12,7 @@
   age.secrets.tailscale.file = ../secrets/tailscale.age;
   age.secrets.ddns-config = {
     file = ../secrets/ddns-config.age;
+    # todo make this declarative
     owner = "ddns";
     group = "ddns";
     mode = "0400";
