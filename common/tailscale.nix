@@ -11,4 +11,5 @@
       "--accept-routes"
     ];
   };
+  age.secrets.tailscale.file = ../secrets/tailscale.age;
 }

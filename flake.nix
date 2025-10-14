@@ -42,6 +42,11 @@
         modules = commonModules ++ [ ./fawkes ];
         specialArgs = { inherit inputs; };
       };
+      nixosConfigurations.portkey = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = commonModules ++ [ ./portkey ];
+        specialArgs = { inherit inputs; };
+      };
     }
     // flake-utils.lib.eachDefaultSystem (
       system:
