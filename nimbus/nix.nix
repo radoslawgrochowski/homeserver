@@ -17,8 +17,12 @@
           "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
           "radoslawgrochowski-homeserver.cachix.org-1:IUdvjxx3+DE0HQC2sxfrh0WWi9UlZBUGgi0CJz4K3DI="
         ];
+        auto-optimise-store = true;
       };
-      gc.automatic = true;
+      gc = {
+        automatic = true;
+        options = "--delete-older-than 14d";
+      };
     };
   }
 )
