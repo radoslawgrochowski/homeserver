@@ -20,7 +20,6 @@
     ./home-assistant
     ./mqtt.nix
     ./auto-upgrade.nix
-    ./nix.nix
     ./sanoid.nix
     ./security.nix
     ./ddns.nix
