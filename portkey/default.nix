@@ -3,6 +3,7 @@
   imports = [
     ./hardware.nix
     ./users.nix
+    ./fail2ban.nix
   ];
 
   networking.hostName = "portkey";
