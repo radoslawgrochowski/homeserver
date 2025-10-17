@@ -4,6 +4,7 @@
     ./hardware.nix
     ./users.nix
     ./fail2ban.nix
+    ./pangolin
   ];
 
   networking.hostName = "portkey";
