@@ -22,4 +22,9 @@ in
   "tailscale.age".publicKeys = all;
   "ddns-config.age".publicKeys = home;
   "home-assistant-secrets.age".publicKeys = home;
+  "nimbus-newt-env.age".publicKeys = home;
+  "pangolin-env.age".publicKeys = [
+    portkey
+    radoslawgrochowski-wsl
+  ];
 }

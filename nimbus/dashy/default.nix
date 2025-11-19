@@ -23,4 +23,5 @@ in
   };
 
   services.nginx.virtualHosts."nimbus.fard.pl" = nginxSettings;
+  services.nginx.virtualHosts."192.168.0.8" = nginxSettings;
 }

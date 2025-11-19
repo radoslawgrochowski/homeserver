@@ -27,8 +27,16 @@
             nixpkgs.overlays = (nixpkgs.lib.attrValues (import ./overlays.nix { inherit inputs; }));
           }
         )
+        (
+          { ... }:
+          {
+            disabledModules = [ "services/web-servers/traefik.nix" ];
+          }
+        )
         agenix.nixosModules.default
         ./common
+        "${nixpkgs-unstable}/nixos/modules/services/networking/pangolin.nix"
+        "${nixpkgs-unstable}/nixos/modules/services/web-servers/traefik.nix"
       ];
     in
     {

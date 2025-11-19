@@ -25,6 +25,7 @@
     ./ddns.nix
     ./acme.nix
     ./collabora.nix
+    ./newt.nix
   ];
 
   time.timeZone = "Europe/Warsaw";
