@@ -24,6 +24,7 @@
     ];
 
     customComponents = [
+      (pkgs.callPackage ./browser-mod.nix { })
       (pkgs.callPackage ./gree.nix { })
       (pkgs.callPackage ./ztm.nix { })
     ];
@@ -45,6 +46,7 @@
             ];
             allow_bypass_login = true;
           }
+          { type = "homeassistant"; }
         ];
       };
       "automation manual" =
