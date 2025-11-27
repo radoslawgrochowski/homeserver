@@ -57,6 +57,27 @@
         "0x842712fffe380961" = {
           friendly_name = "office/sensor";
         };
+        "0x8c8b48fffef12834" = {
+          friendly_name = "living-room/bulb1";
+        };
+        "0x8c8b48fffedd1d4f" = {
+          friendly_name = "living-room/bulb2";
+        };
+        "0x94a081fffe706960" = {
+          friendly_name = "living-room/bulb3";
+        };
+        "0x94a081fffe0f26f0" = {
+          friendly_name = "kitchen/bulb1";
+        };
+        "0x8c8b48fffef12eac" = {
+          friendly_name = "kitchen/bulb2";
+        };
+        "0x8c8b48fffec49d39" = {
+          friendly_name = "hall/bulb1";
+        };
+        "0x94a081fffeac2137" = {
+          friendly_name = "hall/bulb2";
+        };
       };
     };
   };
