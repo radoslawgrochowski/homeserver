@@ -58,6 +58,7 @@
       script =
         (import ./roborock.nix { inherit lib; }).script
         // (import ./light-switches.nix { inherit lib; }).script;
+      light = (import ./light-groups.nix { inherit lib; }).light;
       "automation ui" = "!include automations.yaml";
       assist_pipeline = { };
       dhcp = { };
