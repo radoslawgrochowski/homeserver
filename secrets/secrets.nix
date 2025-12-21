@@ -22,4 +22,5 @@ in
   "tailscale.age".publicKeys = all;
   "ddns-config.age".publicKeys = home;
   "home-assistant-secrets.age".publicKeys = home;
+  "palworld-environment.age".publicKeys = home;
 }

@@ -25,6 +25,7 @@
           { overlays, ... }:
           {
             nixpkgs.overlays = (nixpkgs.lib.attrValues (import ./overlays.nix { inherit inputs; }));
+            nixpkgs.config.allowUnfree = true;
           }
         )
         agenix.nixosModules.default
