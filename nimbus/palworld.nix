@@ -10,7 +10,7 @@
   ];
 
   virtualisation.oci-containers.containers.palworld = {
-    image = "thijsvanloef/palworld-server-docker:23bf8b2a4918e96fad748a9b37afbbbef3651d75f4e4ee04dca59bf3b4f1df89";
+    image = "thijsvanloef/palworld-server-docker@sha256:50aa77c95bab2a4ff7062b6f74daa023e081efc86dbbdcf2006c0eea4e7ae3b4";
     autoStart = true;
 
     extraOptions = [
@@ -30,7 +30,7 @@
       RCON_ENABLED = "true";
       UPDATE_ON_BOOT = "true";
       BACKUP_ENABLED = "true";
-      BACKUP_CRON_EXPRESSION = "0 2 * * *"; # Daily backup at 2 AM
+      BACKUP_CRON_EXPRESSION = "0 2 * * *";
       AUTO_UPDATE_ENABLED = "false";
       AUTO_REBOOT_ENABLED = "false";
     };
