@@ -51,12 +51,6 @@
         "0x0c2a6ffffe22d8e5" = {
           friendly_name = "living-room/light";
         };
-        "0x0ceff6fffe675963" = {
-          friendly_name = "loggia/sensor";
-        };
-        "0x842712fffe380961" = {
-          friendly_name = "office/sensor";
-        };
         "0x8c8b48fffef12834" = {
           friendly_name = "living-room/bulb1";
         };
@@ -65,6 +59,15 @@
         };
         "0x94a081fffe706960" = {
           friendly_name = "living-room/bulb3";
+        };
+        "0x781c9dfffe29414e" = {
+          friendly_name = "living-room/led-strip";
+        };
+        "0x0ceff6fffe675963" = {
+          friendly_name = "loggia/sensor";
+        };
+        "0x842712fffe380961" = {
+          friendly_name = "office/sensor";
         };
         "0x94a081fffe0f26f0" = {
           friendly_name = "kitchen/bulb1";
