@@ -17,6 +17,8 @@
     ./postgresql.nix
     ./arr.nix
     ./jellyfin.nix
+    ./devices
+    ./devices/registry.nix
     ./home-assistant
     ./mqtt.nix
     ./auto-upgrade.nix
