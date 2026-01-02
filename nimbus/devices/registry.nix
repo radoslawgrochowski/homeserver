@@ -39,6 +39,15 @@
       ieee = "0x08ddebfffef1a9f8";
       room = "living_room";
       type = "sensor";
+      metadata = {
+        alerts = {
+          temperature = {
+            min = 16;
+            max = 26;
+            ac_entity = "climate.gree_climate_gree_c03937a1ae5c";
+          };
+        };
+      };
     }
     {
       ieee = "0x0c2a6ffffe22d8e5";
@@ -108,6 +117,10 @@
           humidity = {
             min = 20;
             max = 80;
+          };
+          temperature = {
+            min = 5;
+            max = 35;
           };
         };
       };

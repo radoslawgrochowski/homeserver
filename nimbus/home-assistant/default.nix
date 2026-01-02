@@ -50,7 +50,7 @@
         ];
       };
       "automation manual" =
-        (import ./temperature-alerts.nix)
+        (import ./temperature-alerts.nix { inherit config lib; })
         ++ (import ./grafana-alerts.nix)
         ++ (import ./humidity-alerts.nix { inherit config lib; })
         ++ (import ./roborock.nix { inherit lib; }).automation
