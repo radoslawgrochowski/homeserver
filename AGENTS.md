@@ -16,8 +16,11 @@ Keep README.md as the primary source for project conventions and information.
 
 ## Code Style & Conventions
 
+### General
+
 - **Imports**: Group common imports at module top, use relative paths
 - **Structure**: Modular configuration - one service per file when possible
+- **Comments**: Avoid obvious comments. Code should be self-documenting through clear naming and structure
 
 ## Post-Edit Validation
 

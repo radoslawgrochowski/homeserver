@@ -52,6 +52,7 @@
       "automation manual" =
         (import ./temperature-alerts.nix)
         ++ (import ./grafana-alerts.nix)
+        ++ (import ./humidity-alerts.nix { inherit config lib; })
         ++ (import ./roborock.nix { inherit lib; }).automation
         ++ (import ./light-switches.nix { inherit lib; }).automation;
       input_datetime = (import ./roborock.nix { inherit lib; }).input_datetime;

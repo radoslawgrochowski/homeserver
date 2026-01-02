@@ -103,6 +103,14 @@
       ieee = "0x0ceff6fffe675963";
       room = "loggia";
       type = "sensor";
+      metadata = {
+        alerts = {
+          humidity = {
+            min = 20;
+            max = 80;
+          };
+        };
+      };
     }
 
     # Office
