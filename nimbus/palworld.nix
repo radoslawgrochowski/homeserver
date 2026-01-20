@@ -1,6 +1,8 @@
-{ config, ... }:
-{
-  # Open firewall for Palworld server (local network access)
+{ config, lib, ... }:
+let
+  enable = false;
+in
+lib.mkIf enable {
   networking.firewall.allowedUDPPorts = [ 8211 ];
 
   age.secrets.palworld-environment.file = ../secrets/palworld-environment.age;
