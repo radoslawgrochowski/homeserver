@@ -25,6 +25,18 @@ in
         ];
       };
 
+      conditional = {
+        mapping = {
+          "live-video.net,twitch.tv,ttvnw.net,jtvnw.net" = "8.8.8.8";
+        };
+      };
+
+      caching = {
+        minTime = "5m";
+        maxTime = "30m";
+        prefetching = true;
+      };
+
       blocking = {
         blackLists = {
           ads = [
