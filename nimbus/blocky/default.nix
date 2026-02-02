@@ -13,9 +13,15 @@ in
         http = httpPort;
       };
 
-      upstreams.groups.default = [
-        "https://one.one.one.one/dns-query"
-      ];
+      upstreams = {
+        groups.default = [
+          "https://dns.quad9.net/dns-query"
+          "https://one.one.one.one/dns-query"
+          "https://doh-de.blahdns.com/dns-query"
+          "https://dns.google/dns-query"
+        ];
+        strategy = "parallel_best";
+      };
 
       bootstrapDns = {
         upstream = "https://one.one.one.one/dns-query";
@@ -25,68 +31,18 @@ in
         ];
       };
 
-      conditional = {
-        mapping = {
-          "live-video.net,twitch.tv,ttvnw.net,jtvnw.net" = "8.8.8.8";
-        };
-      };
-
       caching = {
         minTime = "5m";
-        maxTime = "30m";
+        maxTime = "60m";
         prefetching = true;
       };
 
       blocking = {
-        blackLists = {
-          ads = [
-            "https://blocklistproject.github.io/Lists/ads.txt"
-            "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts"
-            "https://adaway.org/hosts.txt"
-            "https://v.firebog.net/hosts/AdguardDNS.txt"
-            "https://v.firebog.net/hosts/Admiral.txt"
-            "https://raw.githubusercontent.com/anudeepND/blacklist/master/adservers.txt"
-            "https://s3.amazonaws.com/lists.disconnect.me/simple_ad.txt"
-            "https://v.firebog.net/hosts/Easylist.txt"
-            "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=0&mimetype=plaintext"
-            "https://raw.githubusercontent.com/FadeMind/hosts.extras/master/UncheckyAds/hosts"
-            "https://raw.githubusercontent.com/bigdargon/hostsVN/master/hosts"
-          ];
-          tracking = [
-            "https://v.firebog.net/hosts/Easyprivacy.txt"
-            "https://v.firebog.net/hosts/Prigent-Ads.txt"
-            "https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.2o7Net/hosts"
-            "https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/spy.txt"
-            "https://hostfiles.frogeye.fr/firstparty-trackers-hosts.txt"
-          ];
-          malicious = [
-            "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/Alternate%20versions%20Anti-Malware%20List/AntiMalwareHosts.txt"
-            "https://osint.digitalside.it/Threat-Intel/lists/latestdomains.txt"
-            "https://s3.amazonaws.com/lists.disconnect.me/simple_malvertising.txt"
-            "https://v.firebog.net/hosts/Prigent-Crypto.txt"
-            "https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Risk/hosts"
-            "https://v.firebog.net/hosts/RPiList-Phishing.txt"
-            "https://v.firebog.net/hosts/RPiList-Malware.txt"
-          ];
-          misc = [
-            "https://zerodot1.gitlab.io/CoinBlockerLists/hosts_browser"
-            "https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-only/hosts"
-          ];
-          catchall = [
-            "https://big.oisd.nl/domainswild"
-          ];
-        };
-
-        clientGroupsBlock = {
-          default = [
-            "ads"
-            "tracking"
-            "malicious"
-            "misc"
-            "catchall"
-          ];
-        };
-
+        denylists.ads = [
+          "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/domains/pro.txt"
+          "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts"
+        ];
+        clientGroupsBlock.default = [ "ads" ];
       };
 
       customDNS = {
