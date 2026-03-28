@@ -22,7 +22,6 @@
         adapter = "ember";
         port = "/dev/ttyUSB0";
       };
-      homeassistant = config.services.home-assistant.enable;
       frontend = {
         enabled = true;
         host = "0.0.0.0";
