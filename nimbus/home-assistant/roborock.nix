@@ -1,6 +1,8 @@
 { lib }:
 let
   vacuumEntity = "vacuum.roborock_s5_max";
+  cancelledBoolean = "input_boolean.roborock_cleaning_cancelled";
+  cleanedRoomsText = "input_text.roborock_cleaned_rooms";
 
   slugify = name: builtins.replaceStrings [ "-" ] [ "_" ] name;
   uppercaseSlugify = name: slugify (lib.strings.toUpper name);
@@ -39,6 +41,23 @@ let
     icon = room.icon;
     sequence = [
       {
+        service = "notify.notify";
+        data = {
+          title = "🧹 Cleaning in Progress";
+          message = "Cleaning ${name}...";
+          data = {
+            tag = "roborock_cleaning";
+            priority = "high";
+            actions = [
+              {
+                action = "CANCEL_CLEANING";
+                title = "Cancel";
+              }
+            ];
+          };
+        };
+      }
+      {
         service = "vacuum.send_command";
         target = {
           entity_id = vacuumEntity;
@@ -56,6 +75,59 @@ let
         data = {
           datetime = "{{ now().isoformat() }}";
         };
+      }
+      {
+        wait_for_trigger = [
+          {
+            platform = "state";
+            entity_id = vacuumEntity;
+            from = "cleaning";
+          }
+        ];
+        timeout = "00:30:00";
+      }
+      {
+        choose = [
+          {
+            conditions = [
+              {
+                condition = "state";
+                entity_id = cancelledBoolean;
+                state = "on";
+              }
+            ];
+            sequence = [
+              {
+                service = "input_boolean.turn_off";
+                target = {
+                  entity_id = cancelledBoolean;
+                };
+              }
+            ];
+          }
+          {
+            conditions = [
+              {
+                condition = "state";
+                entity_id = cancelledBoolean;
+                state = "off";
+              }
+            ];
+            sequence = [
+              {
+                service = "notify.notify";
+                data = {
+                  title = "✅ Cleaning Complete";
+                  message = "${name} has been cleaned!";
+                  data = {
+                    tag = "roborock_cleaning";
+                    priority = "normal";
+                  };
+                };
+              }
+            ];
+          }
+        ];
       }
     ];
   };
@@ -81,6 +153,62 @@ let
         alias = "Clean Overdue Rooms";
         icon = "mdi:robot-vacuum";
         sequence = [
+          {
+            service = "notify.notify";
+            data = {
+              title = "🧹 Cleaning in Progress";
+              message = ''
+                {%- set ns = namespace(overdue_rooms=[]) %}
+                {%- for room_name, room_data in {
+                  "living-room": {"interval": ${toString rooms.living-room.cleaningIntervalDays}},
+                  "kitchen": {"interval": ${toString rooms.kitchen.cleaningIntervalDays}},
+                  "hall": {"interval": ${toString rooms.hall.cleaningIntervalDays}},
+                  "office": {"interval": ${toString rooms.office.cleaningIntervalDays}}
+                }.items() %}
+                  {%- set room_slug = room_name | replace("-", "_") %}
+                  {%- set last_cleaned = states('input_datetime.roborock_' + room_slug + '_last_cleaned') | as_datetime %}
+                  {%- if last_cleaned and (now().date() - last_cleaned.date()).days >= room_data.interval %}
+                    {%- set ns.overdue_rooms = ns.overdue_rooms + [room_name] %}
+                  {%- endif %}
+                {%- endfor %}
+                Cleaning overdue rooms: {{ ns.overdue_rooms | join(', ') }}...
+              '';
+              data = {
+                tag = "roborock_cleaning";
+                priority = "high";
+                actions = [
+                  {
+                    action = "CANCEL_CLEANING";
+                    title = "Cancel";
+                  }
+                ];
+              };
+            };
+          }
+          {
+            service = "input_text.set_value";
+            target = {
+              entity_id = cleanedRoomsText;
+            };
+            data = {
+              value = ''
+                {%- set ns = namespace(overdue_rooms=[]) %}
+                {%- for room_name, room_data in {
+                  "living-room": {"interval": ${toString rooms.living-room.cleaningIntervalDays}},
+                  "kitchen": {"interval": ${toString rooms.kitchen.cleaningIntervalDays}},
+                  "hall": {"interval": ${toString rooms.hall.cleaningIntervalDays}},
+                  "office": {"interval": ${toString rooms.office.cleaningIntervalDays}}
+                }.items() %}
+                  {%- set room_slug = room_name | replace("-", "_") %}
+                  {%- set last_cleaned = states('input_datetime.roborock_' + room_slug + '_last_cleaned') | as_datetime %}
+                  {%- if last_cleaned and (now().date() - last_cleaned.date()).days >= room_data.interval %}
+                    {%- set ns.overdue_rooms = ns.overdue_rooms + [room_name] %}
+                  {%- endif %}
+                {%- endfor %}
+                {{ ns.overdue_rooms | join(', ') }}
+              '';
+            };
+          }
           {
             service = "vacuum.send_command";
             target = {
@@ -136,6 +264,59 @@ let
                 }
               ];
             };
+          }
+          {
+            wait_for_trigger = [
+              {
+                platform = "state";
+                entity_id = vacuumEntity;
+                from = "cleaning";
+              }
+            ];
+            timeout = "00:30:00";
+          }
+          {
+            choose = [
+              {
+                conditions = [
+                  {
+                    condition = "state";
+                    entity_id = cancelledBoolean;
+                    state = "on";
+                  }
+                ];
+                sequence = [
+                  {
+                    service = "input_boolean.turn_off";
+                    target = {
+                      entity_id = cancelledBoolean;
+                    };
+                  }
+                ];
+              }
+              {
+                conditions = [
+                  {
+                    condition = "state";
+                    entity_id = cancelledBoolean;
+                    state = "off";
+                  }
+                ];
+                sequence = [
+                  {
+                    service = "notify.notify";
+                    data = {
+                      title = "✅ Cleaning Complete";
+                      message = "Cleaned: {{ states('${cleanedRoomsText}') }}";
+                      data = {
+                        tag = "roborock_cleaning";
+                        priority = "normal";
+                      };
+                    };
+                  }
+                ];
+              }
+            ];
           }
         ];
       };
@@ -230,6 +411,13 @@ let
           action = "CLEAN_OVERDUE";
         };
       }
+      {
+        platform = "event";
+        event_type = "mobile_app_notification_action";
+        event_data = {
+          action = "CANCEL_CLEANING";
+        };
+      }
     ];
 
   actionChoices =
@@ -260,11 +448,55 @@ let
           }
         ];
       }
+      {
+        conditions = [
+          {
+            condition = "template";
+            value_template = "{{ trigger.event.data.action == 'CANCEL_CLEANING' }}";
+          }
+        ];
+        sequence = [
+          {
+            service = "input_boolean.turn_on";
+            target = {
+              entity_id = cancelledBoolean;
+            };
+          }
+          {
+            service = "notify.notify";
+            data = {
+              title = "❌ Cleaning Cancelled";
+              message = "Returning vacuum to dock...";
+              data = {
+                tag = "roborock_cleaning";
+                priority = "normal";
+              };
+            };
+          }
+          {
+            service = "vacuum.return_to_base";
+            target = {
+              entity_id = vacuumEntity;
+            };
+          }
+        ];
+      }
     ];
 
 in
 {
   input_datetime = inputDatetimes;
+  input_boolean = {
+    roborock_cleaning_cancelled = {
+      name = "Roborock Cleaning Cancelled";
+      initial = false;
+    };
+  };
+  input_text = {
+    roborock_cleaned_rooms = {
+      name = "Roborock Cleaned Rooms";
+    };
+  };
   script = scripts;
   automation = [
     overdueCleaningAutomation
