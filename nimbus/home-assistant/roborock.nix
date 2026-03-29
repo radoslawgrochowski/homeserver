@@ -323,13 +323,13 @@ let
     };
 
   overdueCleaningAutomation = {
-    id = "roborock_suggest_overdue_cleaning";
-    alias = "Suggest Overdue Room Cleaning";
-    description = "Suggest cleaning rooms that are overdue for cleaning";
+    id = "roborock_auto_clean_overdue";
+    alias = "Auto Clean Overdue Rooms";
+    description = "Automatically clean rooms that are overdue for cleaning";
     trigger = [
       {
         platform = "time";
-        at = "09:00:00";
+        at = "07:45:00";
       }
     ];
     condition = [
@@ -360,36 +360,7 @@ let
     ];
     action = [
       {
-        service = "notify.notify";
-        data = {
-          title = "🧹 Room Cleaning";
-          message = ''
-            {%- set ns = namespace(overdue_rooms=[]) %}
-            {%- for room_name, room_data in {
-              "living-room": {"interval": ${toString rooms.living-room.cleaningIntervalDays}},
-              "kitchen": {"interval": ${toString rooms.kitchen.cleaningIntervalDays}},
-              "hall": {"interval": ${toString rooms.hall.cleaningIntervalDays}},
-              "office": {"interval": ${toString rooms.office.cleaningIntervalDays}}
-            }.items() %}
-              {%- set room_slug = room_name | replace("-", "_") %}
-              {%- set last_cleaned = states('input_datetime.roborock_' + room_slug + '_last_cleaned') | as_datetime %}
-              {%- if last_cleaned and (now().date() - last_cleaned.date()).days >= room_data.interval %}
-                {%- set ns.overdue_rooms = ns.overdue_rooms + [room_name] %}
-              {%- endif %}
-            {%- endfor %}
-            These rooms need cleaning: {{ ns.overdue_rooms | join(', ') }}
-          '';
-          data = {
-            priority = "normal";
-            tag = "room_cleaning_suggestion";
-            actions = [
-              {
-                action = "CLEAN_OVERDUE";
-                title = "Clean";
-              }
-            ];
-          };
-        };
+        service = "script.roborock_clean_overdue_rooms";
       }
     ];
     mode = "single";
