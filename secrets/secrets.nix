@@ -15,9 +15,6 @@ in
 {
   "nextcloud-admin-password.age".publicKeys = home;
   "radarr-api-key.age".publicKeys = home;
-  "restic-env.age".publicKeys = home;
-  "restic-password.age".publicKeys = home;
-  "restic-repository.age".publicKeys = home;
   "sonarr-api-key.age".publicKeys = home;
   "tailscale.age".publicKeys = all;
   "ddns-config.age".publicKeys = home;

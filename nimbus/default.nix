@@ -7,7 +7,6 @@
     ./containers.nix
     ./dashy
     ./blocky
-    ./restic.nix
     ./secrets.nix
     ./grafana
     ./prometheus
