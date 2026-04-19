@@ -41,6 +41,10 @@ sections:
         url: http://nimbus.fard.pl/sabnzbd
       - title: Jellyfin
         url: http://nimbus.fard.pl/jellyfin
+      - title: Shelfmark
+        url: http://nimbus.fard.pl/shelfmark
+      - title: Calibre-Web
+        url: http://nimbus.fard.pl/books
 
   - name: Monitoring
     icon: fas fa-rocket

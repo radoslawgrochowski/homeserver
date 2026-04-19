@@ -27,6 +27,7 @@
     ./acme.nix
     ./collabora.nix
     ./palworld.nix
+    ./books.nix
   ];
 
   time.timeZone = "Europe/Warsaw";
