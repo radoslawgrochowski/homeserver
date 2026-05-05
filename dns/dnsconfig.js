@@ -1,8 +1,9 @@
-var OVH = NewDnsProvider('ovh')
+var REG_OVH = NewRegistrar('ovh')
+var DNS_OVH = NewDnsProvider('ovh')
 
 DEFAULTS(DefaultTTL('1h'), NAMESERVER_TTL('1h'))
 
-D('fard.pl', NewRegistrar('none'), DnsProvider(OVH), [
+D('fard.pl', REG_OVH, DnsProvider(DNS_OVH), [
   NAMESERVER('dns109.ovh.net.'),
   NAMESERVER('ns109.ovh.net.'),
 
