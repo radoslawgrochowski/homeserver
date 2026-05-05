@@ -53,6 +53,7 @@
       system:
       let
         pkgs = import nixpkgs { inherit system; };
+        dns = import ./dns { inherit pkgs; };
       in
       {
         devShells.default = pkgs.mkShell {
@@ -64,6 +65,9 @@
             update-nix-fetchgit
           ];
         };
+
+        devShells.dnscontrol = dns.devShells.dnscontrol;
+        checks = dns.checks;
 
         formatter = pkgs.nixfmt-rfc-style;
       }

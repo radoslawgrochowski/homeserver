@@ -18,6 +18,7 @@ in
   "sonarr-api-key.age".publicKeys = home;
   "tailscale.age".publicKeys = all;
   "ddns-config.age".publicKeys = home;
+  "ddclient-password.age".publicKeys = home;
   "home-assistant-secrets.age".publicKeys = home;
   "palworld-environment.age".publicKeys = home;
 }

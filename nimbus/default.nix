@@ -24,6 +24,7 @@
     ./sanoid.nix
     ./security.nix
     ./ddns.nix
+    ./ddclient.nix
     ./acme.nix
     ./collabora.nix
     ./palworld.nix

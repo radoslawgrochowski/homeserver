@@ -1,0 +1,48 @@
+name: dns
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'dns/**'
+  pull_request:
+    branches:
+      - master
+    paths:
+      - 'dns/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+      - uses: DeterminateSystems/nix-installer-action@v19
+      - name: dnscontrol check
+        working-directory: ./dns
+        run: |
+          nix run --inputs-from . nixpkgs#dnscontrol -- check
+
+  push:
+    if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    needs: check
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+      - uses: DeterminateSystems/nix-installer-action@v19
+      - name: dnscontrol push
+        working-directory: ./dns
+        env:
+          OVH_APP_KEY: ${{ secrets.OVH_APP_KEY }}
+          OVH_APP_SECRET_KEY: ${{ secrets.OVH_APP_SECRET_KEY }}
+          OVH_CONSUMER_KEY: ${{ secrets.OVH_CONSUMER_KEY }}
+        run: |
+          nix run --inputs-from . nixpkgs#dnscontrol -- push

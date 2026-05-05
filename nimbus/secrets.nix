@@ -14,4 +14,8 @@
     group = "ddns";
     mode = "0400";
   };
+  age.secrets.ddclient-password = {
+    file = ../secrets/ddclient-password.age;
+    mode = "0400";
+  };
 }
