@@ -7,7 +7,7 @@
     passwordFile = config.age.secrets.ddclient-password.path;
     domains = [ "nimbus.fard.pl" ];
     usev6 = "";
-    interval = "1min";
+    interval = "15min";
     verbose = true;
   };
 }
