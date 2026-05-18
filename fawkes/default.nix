@@ -5,6 +5,7 @@
     ./users.nix
     ./secrets.nix
     ./sanoid.nix
+    ./networking.nix
   ];
 
   boot.loader.systemd-boot.enable = true;

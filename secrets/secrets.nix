@@ -21,4 +21,5 @@ in
   "ddclient-password.age".publicKeys = home;
   "home-assistant-secrets.age".publicKeys = home;
   "palworld-environment.age".publicKeys = home;
+  "wifi-passwords.age".publicKeys = home ++ [ fawkes ];
 }
