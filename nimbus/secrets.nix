@@ -18,4 +18,5 @@
     file = ../secrets/ddclient-password.age;
     mode = "0400";
   };
+  age.secrets.newt-token.file = ../secrets/newt-token.age;
 }

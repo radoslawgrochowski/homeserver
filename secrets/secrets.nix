@@ -22,4 +22,12 @@ in
   "home-assistant-secrets.age".publicKeys = home;
   "palworld-environment.age".publicKeys = home;
   "wifi-passwords.age".publicKeys = home ++ [ fawkes ];
+  "pangolin-environment.age".publicKeys = [
+    radoslawgrochowski-wsl
+    portkey
+  ];
+  "newt-token.age".publicKeys = [
+    radoslawgrochowski-wsl
+    nimbus
+  ];
 }

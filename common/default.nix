@@ -6,5 +6,6 @@
     ./node-exporter.nix
     ./promtail.nix
     ./nix.nix
+    ./acme.nix
   ];
 }

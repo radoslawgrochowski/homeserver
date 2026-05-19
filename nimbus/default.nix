@@ -25,10 +25,10 @@
     ./security.nix
     ./ddns.nix
     ./ddclient.nix
-    ./acme.nix
     ./collabora.nix
     ./palworld.nix
     ./books.nix
+    ./newt.nix
   ];
 
   time.timeZone = "Europe/Warsaw";
