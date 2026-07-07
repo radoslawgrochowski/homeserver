@@ -4,7 +4,7 @@
     ./tailscale.nix
     ./zfs.nix
     ./node-exporter.nix
-    ./promtail.nix
+    ./alloy.nix
     ./nix.nix
   ];
 }

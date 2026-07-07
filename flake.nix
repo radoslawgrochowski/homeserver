@@ -2,7 +2,7 @@
   description = "Homeserver configuration";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
     agenix = {
@@ -60,7 +60,7 @@
           packages = with pkgs; [
             just
             agenix.packages."${system}".default
-            nixfmt-rfc-style
+            nixfmt-tree
             fd
             update-nix-fetchgit
           ];
@@ -69,7 +69,7 @@
         devShells.dnscontrol = dns.devShells.dnscontrol;
         checks = dns.checks;
 
-        formatter = pkgs.nixfmt-rfc-style;
+        formatter = pkgs.nixfmt-tree;
       }
     );
 

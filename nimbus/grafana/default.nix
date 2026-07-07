@@ -22,6 +22,7 @@
         enabled = false;
       };
       security = {
+        secret_key = "SW2YcwTIb9zpOOhoPsMm";
         allow_embedding = true;
       };
     };
