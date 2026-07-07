@@ -75,7 +75,9 @@ let
     {
       id = "${sensor.room}_high_temperature_alert";
       alias = "${roomName} High Temperature Alert";
-      description = "Alert when ${sensor.room} temperature exceeds ${toString threshold}°C" + (if hasAc then " and AC is off" else "");
+      description =
+        "Alert when ${sensor.room} temperature exceeds ${toString threshold}°C"
+        + (if hasAc then " and AC is off" else "");
       trigger = [
         {
           platform = "numeric_state";
@@ -84,21 +86,20 @@ let
           for.minutes = 15;
         }
       ];
-      condition =
-        [
-          {
-            condition = "template";
-            value_template = ''
-              {% set last_triggered = state_attr('automation.${sensor.room}_high_temperature_alert', 'last_triggered') %}
-              {{ last_triggered == none or (now() - last_triggered).total_seconds() > 86400 }}
-            '';
-          }
-        ]
-        ++ lib.optional hasAc {
-          condition = "state";
-          entity_id = acEntity;
-          state = "off";
-        };
+      condition = [
+        {
+          condition = "template";
+          value_template = ''
+            {% set last_triggered = state_attr('automation.${sensor.room}_high_temperature_alert', 'last_triggered') %}
+            {{ last_triggered == none or (now() - last_triggered).total_seconds() > 86400 }}
+          '';
+        }
+      ]
+      ++ lib.optional hasAc {
+        condition = "state";
+        entity_id = acEntity;
+        state = "off";
+      };
       action = [
         {
           service = "notify.notify";
@@ -107,19 +108,18 @@ let
             message =
               "${roomName} temperature is {{ trigger.to_state.state }}°C (above ${toString threshold}°C threshold)"
               + (if hasAc then " and AC is off" else "");
-            data =
-              {
-                priority = "high";
-                tag = "${sensor.room}_temperature_high";
-              }
-              // lib.optionalAttrs hasAc {
-                actions = [
-                  {
-                    action = "TURN_ON_AC_${lib.toUpper sensor.room}";
-                    title = "Turn On AC";
-                  }
-                ];
-              };
+            data = {
+              priority = "high";
+              tag = "${sensor.room}_temperature_high";
+            }
+            // lib.optionalAttrs hasAc {
+              actions = [
+                {
+                  action = "TURN_ON_AC_${lib.toUpper sensor.room}";
+                  title = "Turn On AC";
+                }
+              ];
+            };
           };
         }
         {

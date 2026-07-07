@@ -20,7 +20,7 @@ buildHomeAssistantComponent rec {
     hash = "sha256-zo4FgYjHP+0nLdmwBpwJuqW0yvUw1rKhlZICDKXnbjY=";
   };
 
-  propagatedBuildInputs = with home-assistant.python.pkgs; [
+  propagatedBuildInputs = with home-assistant.python3Packages; [
     pycryptodome
     aiofiles
   ];

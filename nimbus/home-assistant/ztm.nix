@@ -9,7 +9,7 @@ buildHomeAssistantComponent {
   owner = "peetereczek";
   domain = "ztm";
 
-  propagatedBuildInputs = with home-assistant.python.pkgs; [
+  propagatedBuildInputs = with home-assistant.python3Packages; [
   ];
 
   src = pkgs.fetchFromGitHub {

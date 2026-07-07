@@ -92,7 +92,7 @@ in
       let
         ieees = map (d: d.ieee) cfg.zigbee;
         duplicateIeees = lib.filter (ieee: (lib.count (x: x == ieee) ieees) > 1) (lib.unique ieees);
-        
+
         names = map (d: d.name) cfg.zigbee;
         duplicateNames = lib.filter (name: (lib.count (x: x == name) names) > 1) (lib.unique names);
       in
