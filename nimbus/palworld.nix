@@ -1,6 +1,6 @@
 { config, lib, ... }:
 let
-  enable = false;
+  enable = true;
 in
 lib.mkIf enable {
   networking.firewall.allowedUDPPorts = [ 8211 ];
@@ -12,7 +12,7 @@ lib.mkIf enable {
   ];
 
   virtualisation.oci-containers.containers.palworld = {
-    image = "thijsvanloef/palworld-server-docker@sha256:50aa77c95bab2a4ff7062b6f74daa023e081efc86dbbdcf2006c0eea4e7ae3b4";
+    image = "thijsvanloef/palworld-server-docker@sha256:6c2364a32895cddacf0671d755a8c96a392bae19fa70f5e841747cf2d4abc2bb";
     autoStart = true;
 
     extraOptions = [
@@ -29,12 +29,11 @@ lib.mkIf enable {
       SERVER_DESCRIPTION = "A Palworld server running on Nimbus";
       COMMUNITY = "false";
       MULTITHREADING = "true";
-      RCON_ENABLED = "true";
       UPDATE_ON_BOOT = "true";
       BACKUP_ENABLED = "true";
       BACKUP_CRON_EXPRESSION = "0 2 * * *";
-      AUTO_UPDATE_ENABLED = "false";
-      AUTO_REBOOT_ENABLED = "false";
+      AUTO_UPDATE_ENABLED = "true";
+      AUTO_REBOOT_ENABLED = "true";
     };
 
     environmentFiles = [
