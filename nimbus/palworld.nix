@@ -34,6 +34,8 @@ lib.mkIf enable {
       BACKUP_CRON_EXPRESSION = "0 2 * * *";
       AUTO_UPDATE_ENABLED = "true";
       AUTO_REBOOT_ENABLED = "true";
+      # Decrease default egg hatching time to 3h (default 72h)
+      PAL_EGG_DEFAULT_HATCHING_TIME = "3.000000";
     };
 
     environmentFiles = [
