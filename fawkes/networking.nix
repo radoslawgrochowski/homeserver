@@ -4,16 +4,18 @@
     useDHCP = false;
     interfaces.wlp2s0.useDHCP = true;
     interfaces.enp1s0.useDHCP = true;
+
     wireless = {
       enable = true;
       secretsFile = config.age.secrets.wifi-passwords.path;
+      interfaces = [ "wlp2s0" ];
       networks = {
-        "NIEBIESKIE_NIEBO_5G" = {
-          pskRaw = "ext:niebieskie_niebo";
+        Grochowscy_5G = {
+          pskRaw = "ext:grochowscy";
           priority = 1;
         };
-        "NIEBIESKIE_NIEBO" = {
-          pskRaw = "ext:niebieskie_niebo";
+        Grochowscy = {
+          pskRaw = "ext:grochowscy";
         };
       };
     };
