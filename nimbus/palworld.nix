@@ -1,6 +1,6 @@
 { config, lib, ... }:
 let
-  enable = true;
+  enable = false;
 in
 lib.mkIf enable {
   networking.firewall.allowedUDPPorts = [ 8211 ];
