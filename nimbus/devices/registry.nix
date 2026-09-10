@@ -24,11 +24,6 @@
       type = "light";
     }
     {
-      ieee = "0x08b95ffffed9f8b5";
-      room = "bedroom";
-      type = "control";
-    }
-    {
       ieee = "0x44e2f8fffe0149d0";
       room = "bedroom";
       type = "led_strip";
@@ -77,6 +72,11 @@
       ieee = "0x781c9dfffe29414e";
       room = "living_room";
       type = "led_strip";
+    }
+    {
+      ieee = "0x08b95ffffed9f8b5";
+      room = "living_room";
+      type = "control";
     }
 
     # Kitchen
